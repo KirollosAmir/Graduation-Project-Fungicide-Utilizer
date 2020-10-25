@@ -3,7 +3,6 @@ dht DHT;
 int dht_apin = A0;
 int sensorPin = A1; 
 int sensorValue;  
-int limit = 300; 
 
 void setup(){
  
