@@ -1,0 +1,55 @@
+
+[System]
+Name='wheat rust'
+Type='mamdani'
+Version=2.0
+NumInputs=4
+NumOutputs=1
+NumRules=3
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='Max_temp.'
+Range=[0 40]
+NumMFs=2
+MF1='accepted':'trimf',[0 15 24]
+MF2='rejected':'trimf',[25 35 40]
+
+[Input2]
+Name='Min_temp.'
+Range=[0 40]
+NumMFs=3
+MF1='accepted':'trimf',[9 11 13]
+MF2='rejected':'trimf',[0 4 8]
+MF3='rejected2':'trimf',[14 30 40]
+
+[Input3]
+Name='RH'
+Range=[0 100]
+NumMFs=2
+MF1='accepted':'trimf',[71 85 100]
+MF2='rejected':'trimf',[0 35 70]
+
+[Input4]
+Name='WS'
+Range=[0.5 9]
+NumMFs=2
+MF1='rejected1':'trimf',[0.5 1 1.5]
+MF2='accepted':'trimf',[1.6 6 9]
+
+[Output1]
+Name='sevirty'
+Range=[0 1]
+NumMFs=2
+MF1='yes':'trimf',[0.6 0.7 1]
+MF2='no':'trimf',[0 0.25 0.5]
+
+[Rules]
+1 1 1 2, 1 (1) : 1
+2 2 2 1, 2 (1) : 2
+2 3 2 1, 2 (1) : 2
+

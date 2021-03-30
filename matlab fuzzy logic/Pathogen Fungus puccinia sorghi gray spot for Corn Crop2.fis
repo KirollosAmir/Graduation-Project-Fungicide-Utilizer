@@ -1,0 +1,58 @@
+[System]
+Name='Pathogen Fungus puccinia sorghi gray spot for Corn Crop2'
+Type='mamdani'
+Version=2.0
+NumInputs=4
+NumOutputs=1
+NumRules=5
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='Lower_Day_Temp'
+Range=[0 40]
+NumMFs=3
+MF1='Accepted':'trimf',[25 29 32]
+MF2='rejected':'trimf',[32.1 35 40]
+MF3='Rejected':'trimf',[0 15 24.9]
+
+[Input2]
+Name='Higher_Day_Temp'
+Range=[0 40]
+NumMFs=3
+MF1='Rejected':'trimf',[0 17 26.9]
+MF2='Accepted':'trimf',[27 29 30]
+MF3='rejected':'trimf',[30.1 35 40]
+
+[Input3]
+Name='LWD'
+Range=[0 24]
+NumMFs=3
+MF1='Rejected':'trimf',[0 6 11.9]
+MF2='Accepted':'trimf',[12 12 12]
+MF3='rejected':'trimf',[12.1 16 24]
+
+[Input4]
+Name='RH'
+Range=[0 100]
+NumMFs=3
+MF1='rejected':'trimf',[0 45 89.9]
+MF2='Accepted':'trimf',[90 90 90]
+MF3='Rejected':'trimf',[90.1 95 100]
+
+[Output1]
+Name='severity'
+Range=[0 1]
+NumMFs=2
+MF1='Yes':'trimf',[0.54 0.75 1]
+MF2='No':'trimf',[0 0.25 0.5]
+
+[Rules]
+1 2 2 2, 1 (1) : 1
+2 3 3 3, 2 (1) : 2
+1 2 2 2, 1 (1) : 2
+1 3 3 2, 1 (1) : 2
+1 1 1 2, 1 (1) : 2
