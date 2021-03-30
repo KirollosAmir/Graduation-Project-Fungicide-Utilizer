@@ -5,6 +5,10 @@ int moisture_pin = A1;
 int rain_pin = A2; 
 int moisture_value; 
 int rain_value;  
+int TempArray[24];
+int HumArray[24];
+int MoisArray[24];
+int Hour = 0;
 
 void setup(){
  
@@ -17,8 +21,9 @@ void setup(){
 }
  
 void loop(){
+    
     DHT.read11(dht_pin);
-    moisture_value = analogRead(moisture_pin); 
+    moisture_value = 100 - ((analogRead(moisture_pin)/1023)*100); 
     rain_value = analogRead(rain_pin); 
     Serial.print("Humidity = ");
     Serial.print(DHT.humidity);
@@ -30,5 +35,20 @@ void loop(){
     Serial.print(moisture_value);
     Serial.print("  Raindrops = ");
     Serial.println(rain_value);
-    delay(2000);
+
+    
+    TempArray[Hour] = DHT.temperature;
+    HumArray[Hour] = DHT.humidity;
+    MoisArray[Hour] = moisture_value;
+    
+    Hour += 1;
+    
+    if(Hour == 24){
+      //upload data to array and reset hour value 
+      Hour = 0;
+    }
+    
+    delay(3600000);
 }
+
+
