@@ -65,24 +65,6 @@ class _MyLandsPageState extends State<MyLandsPage> {
                   },
                 ),
               ),
-              /*Card(
-                child: ListTile(
-                  title: Text('Edit Profile'),
-                  trailing: Icon(Icons.keyboard_arrow_right),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/edit_profile');
-                  },
-                ),
-              ),*/
-              /*Card(
-                child: ListTile(
-                  title: Text("About"),
-                  trailing: Icon(Icons.keyboard_arrow_right),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/about');
-                  },
-                ),
-              ),*/
               Card(
                 child: ListTile(
                   leading: Icon(Icons.exit_to_app),
