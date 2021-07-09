@@ -16,6 +16,8 @@ import 'BloC/land/landBloc.dart';
 import 'BloC/land/landState.dart';
 import 'BloC/notification/notificationState.dart';
 import 'BloC/notification/notificatioBloc.dart';
+import 'BloC/register/registerBloc.dart';
+import 'BloC/register/registerState.dart';
 import 'modules/home/myHomeScreen.dart';
 import 'modules/users/farmer/news.dart';
 import 'repository/authentication_repo.dart';
@@ -61,28 +63,40 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
+          //farmer auth bloc
           BlocProvider(
             create: (BuildContext context) {
               return AuthenticationBloc(
                   LoginInitState(), AuthenticationRepos());
             },
           ),
+          //farmer register bloc
+          BlocProvider(
+            create: (BuildContext context) {
+              return RegisterBloc(RegisterInitState(), AuthenticationRepos());
+            },
+          ),
+          // farmer lands bloc
           BlocProvider(
             create: (BuildContext context) {
               return LandBloc(LandInitiallState(), MyLandsRepos());
             },
           ),
+          // expert auth bloc
           BlocProvider(create: (BuildContext context) {
             return ExpertAuthenticationBloc(
                 ELoginInitState(), ExpertAuthenticationRepos());
           }),
+          //farmer notification bloc
           BlocProvider(create: (BuildContext context) {
             return NotificationBloc(
                 NotificationInitialState(), NotificationRepos());
           }),
+          // farmer news bloc
           BlocProvider(create: (BuildContext context) {
             return NewsBloc(NewsInitialState(), NewsRepos());
           }),
+          //view all crops bloc
           BlocProvider(create: (BuildContext context) {
             return CropsBloc(InitialState(), CropsRepository());
           }),

@@ -31,6 +31,18 @@ class LandBloc extends Bloc<LandEvent, LandState> {
       } catch (e) {
         yield ErrorState(message: e.toString());
       }
+    } else if (event is SaveLandButttonPressed) {
+      var data = await repo.addLands(
+          event.landname, event.crop, event.postalcode, event.stationserial);
+      if (data == "Error")
+        yield ConnectionErrorState(message: "Connection time out. ");
+      else if (data == "Invalid") {
+        yield ConnectionErrorState(message: "Invalid Credintials.");
+      } else /*if (data == "8")*/ {
+        yield AddLandSuccessState(message: "Land Added Successfully.");
+        // } else {
+        //   print("mafeesh data api msht3'lsh $data");
+      }
     }
   }
 }

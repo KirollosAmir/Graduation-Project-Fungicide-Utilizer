@@ -78,7 +78,7 @@ Widget FarmerDrawer(context) {
           trailing: Icon(Icons.create),
           onTap: () {
             Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => AllCropsPage()));
+                builder: (BuildContext context) => CropsPage()));
           },
         ),
       ),

@@ -24,6 +24,8 @@ class AuthenticationRepos {
     if (response.statusCode == 200) {
       if (response.body == "Failed") {
         return "Invalid";
+      } else if (response.body == null) {
+        return "Error";
       } else {
         var id = response.body;
         SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -33,8 +35,6 @@ class AuthenticationRepos {
         print(x);
         return response.body;
       }
-    } else {
-      return "Error";
     }
   }
 }

@@ -10,27 +10,31 @@ class CropsEvents extends Equatable {
 
 class ViewCropsEvent extends CropsEvents {}
 
+// class ViewCropEvent extends CropsEvents {
+//   final Crop crop;
+//   ViewCropEvent({this.crop});
+// }
 class ViewCropEvent extends CropsEvents {
   final Crop crop;
-  ViewCropEvent({this.crop});
+  ViewCropEvent(this.crop);
 }
 
 class ViewDiseasesEvent extends CropsEvents {
-  final Crop crop;
-  ViewDiseasesEvent({this.crop});
+  final Crop cropp;
+  ViewDiseasesEvent(this.cropp);
 }
 
 class ViewDiseaseEvent extends CropsEvents {
   final Disease disease;
-  ViewDiseaseEvent({this.disease});
+  ViewDiseaseEvent(this.disease);
 }
 
 class ViewTreatmentsEvent extends CropsEvents {
   final Disease disease;
-  ViewTreatmentsEvent({this.disease});
+  ViewTreatmentsEvent(this.disease);
 }
 
 class ViewTreatmentEvent extends CropsEvents {
   final Treatment treatment;
-  ViewTreatmentEvent({this.treatment});
+  ViewTreatmentEvent(this.treatment);
 }

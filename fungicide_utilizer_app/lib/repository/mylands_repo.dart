@@ -20,4 +20,53 @@ class MyLandsRepos {
       return lands;
     }
   }
+
+  Future addLands(String landname, String crop, String postalcode,
+      String stationserial) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String _id = prefs.getString('ID');
+
+    var url = Uri.parse(
+        'https://fungicidesutilizer.000webhostapp.com/APIs/addland.php?farmerid=' +
+            _id +
+            '&title=' +
+            landname +
+            '&crop=' +
+            crop +
+            '&postalCode=' +
+            postalcode +
+            '&station=' +
+            stationserial);
+
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      if (response.body == "error") {
+        return "Error Adding Land.";
+      } else if (response.body != null) {
+        return "Land Added Successfully. ";
+      }
+    } else {
+      return "Connection Error.";
+    }
+  }
+
+  Future deleteLand(String landid) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String _id = prefs.getString('ID');
+    var url = Uri.parse(
+        'https://fungicidesutilizer.000webhostapp.com/APIs/deleteland.php?farmerid=' +
+            _id +
+            '&landid=' +
+            landid);
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      if (response.body == "error") {
+        return "Error Deleting Land.";
+      } else {
+        return "Land Deleted Successfully. ";
+      }
+    } else {
+      return "Connection Error.";
+    }
+  }
 }

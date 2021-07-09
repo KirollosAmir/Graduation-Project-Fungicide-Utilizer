@@ -11,7 +11,12 @@ class MyLandsPage extends StatefulWidget {
 }
 
 class _MyLandsPagestate extends State<MyLandsPage> {
+  TextEditingController landname = TextEditingController();
+  TextEditingController cropname = TextEditingController();
+  TextEditingController postalcode = TextEditingController();
+  TextEditingController serial = TextEditingController();
   PageController controller = PageController();
+
   var names = ['Status', 'History'],
       colors = [Colors.green.withOpacity(.5), Colors.white];
   // ignore: non_constant_identifier_names
@@ -31,194 +36,6 @@ class _MyLandsPagestate extends State<MyLandsPage> {
   void dispose() {
     bloc.close();
     super.dispose();
-  }
-
-  // ignore: non_constant_identifier_names
-  Widget FirstWidget(h, w) {
-    return ListView(
-      children: [
-        Padding(
-          padding: EdgeInsets.only(top: h * .05, left: w * .02, right: w * .02),
-          child: Container(
-            height: h * .2,
-            width: w * .6,
-            // child: Image.asset('images/man.png'),
-          ),
-        )
-      ],
-    );
-  }
-
-  // ignore: non_constant_identifier_names
-  Widget SecWidget(h, w) {
-    return ListView(
-      children: [
-        Padding(
-          padding: EdgeInsets.only(top: h * .05, left: w * .02, right: w * .02),
-        )
-      ],
-    );
-  }
-
-  Future<void> myAlert(h, w) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        ScreenUtil.init(context,
-            designSize: Size(750, 1334), allowFontScaling: false);
-        return AlertDialog(
-          content: SingleChildScrollView(
-              child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: h * .01),
-                child: TextFormField(
-                  textAlign: TextAlign.right,
-                  textDirection: TextDirection.rtl,
-                  autofocus: false,
-                  onFieldSubmitted: (v) {},
-                  decoration: InputDecoration(
-                    labelText: 'Crop Name',
-                    errorStyle: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                    enabled: true,
-                    filled: true,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide(width: 1),
-                    ),
-                  ),
-                  onTap: () {},
-                  onChanged: (value) {},
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: h * .01),
-                child: TextFormField(
-                  textAlign: TextAlign.right,
-                  textDirection: TextDirection.rtl,
-                  autofocus: false,
-                  onFieldSubmitted: (v) {},
-                  decoration: InputDecoration(
-                    labelText: 'Station',
-                    errorStyle: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                    enabled: true,
-                    filled: true,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide(width: 1),
-                    ),
-                  ),
-                  onTap: () {},
-                  onChanged: (value) {},
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: h * .01),
-                child: TextFormField(
-                  textAlign: TextAlign.right,
-                  textDirection: TextDirection.rtl,
-                  autofocus: false,
-                  onFieldSubmitted: (v) {},
-                  decoration: InputDecoration(
-                    labelText: 'Weather',
-                    errorStyle: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                    enabled: true,
-                    filled: true,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide(width: 1),
-                    ),
-                  ),
-                  onTap: () {},
-                  onChanged: (value) {},
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: h * .01),
-                child: TextFormField(
-                  textAlign: TextAlign.right,
-                  textDirection: TextDirection.rtl,
-                  autofocus: false,
-                  onFieldSubmitted: (v) {},
-                  decoration: InputDecoration(
-                    labelText: 'Serial Number',
-                    errorStyle: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                    enabled: true,
-                    filled: true,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide(width: 1),
-                    ),
-                  ),
-                  onTap: () {},
-                  onChanged: (value) {},
-                ),
-              ),
-              Padding(
-                  padding: EdgeInsets.only(top: h * .05),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: w * .3,
-                        height: h * .08,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        child: InkWell(
-                          child: Text('Save',
-                              style: TextStyle(color: Colors.white)),
-                          onTap: () {
-                            setState(() {
-                              Navigator.pop(context);
-                            });
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: w * .02),
-                        child: Container(
-                          width: w * .3,
-                          height: h * .08,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                          child: InkWell(
-                            child: Text(
-                              'Cancel',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            onTap: () {
-                              setState(() {
-                                Navigator.pop(context);
-                              });
-                            },
-                          ),
-                        ),
-                      )
-                    ],
-                  )),
-            ],
-          )),
-        );
-      },
-    );
   }
 
   @override
@@ -282,35 +99,193 @@ class _MyLandsPagestate extends State<MyLandsPage> {
                           ),
                         ),
                         InkWell(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Add Land',
-                                style: TextStyle(fontSize: 40),
-                              ),
-                              Padding(
-                                  padding: EdgeInsets.only(left: w * .01),
-                                  child: InkWell(
-                                    child: Icon(
-                                      Icons.add_circle,
-                                      size: 30,
-                                      color: Colors.green,
-                                    ),
-                                    onTap: () {},
-                                  ))
-                            ],
-                          ),
-                          onTap: () {
-                            setState(() {
-                              myAlert(h, w);
-                            });
-                          },
-                        ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Add Land',
+                                  style: TextStyle(fontSize: 40),
+                                ),
+                                Padding(
+                                    padding: EdgeInsets.only(left: w * .01),
+                                    child: InkWell(
+                                      child: Icon(
+                                        Icons.add_circle,
+                                        size: 30,
+                                        color: Colors.green,
+                                      ),
+                                      onTap: () {},
+                                    ))
+                              ],
+                            ),
+                            onTap: () {
+                              return showDialog<void>(
+                                context: context,
+                                barrierDismissible:
+                                    false, // user must tap button!
+                                builder: (BuildContext context) {
+                                  ScreenUtil.init(context,
+                                      designSize: Size(750, 1334),
+                                      allowFontScaling: false);
+                                  return AlertDialog(
+                                    content: SingleChildScrollView(
+                                        child: Column(
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsets.only(top: h * .01),
+                                          child: TextFormField(
+                                            controller: landname,
+                                            decoration: const InputDecoration(
+                                              hintText: 'Land Name.',
+                                            ),
+                                            validator: (value) {
+                                              if (value.isEmpty) {
+                                                return 'Please enter land name';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsets.only(top: h * .01),
+                                          child: TextFormField(
+                                            controller: cropname,
+                                            decoration: const InputDecoration(
+                                              hintText: 'Crop Name.',
+                                            ),
+                                            validator: (value) {
+                                              if (value.isEmpty) {
+                                                return 'Please enter a crop name.';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsets.only(top: h * .01),
+                                          child: TextFormField(
+                                            controller: postalcode,
+                                            decoration: const InputDecoration(
+                                              hintText: 'Postal Code.',
+                                            ),
+                                            validator: (value) {
+                                              if (value.isEmpty) {
+                                                return 'Please enter your postal code.';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsets.only(top: h * .01),
+                                          child: TextFormField(
+                                            controller: serial,
+                                            decoration: const InputDecoration(
+                                              hintText:
+                                                  'Weather Station Serial Number.',
+                                            ),
+                                            validator: (value) {
+                                              if (value.isEmpty) {
+                                                return 'Please enter a serial number.';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                        ),
+                                        Padding(
+                                            padding:
+                                                EdgeInsets.only(top: h * .05),
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  width: w * .3,
+                                                  height: h * .08,
+                                                  alignment: Alignment.center,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.green,
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
+                                                  ),
+                                                  child: InkWell(
+                                                    child: Text('Save',
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white)),
+                                                    onTap: () {
+                                                      bloc.add(
+                                                          SaveLandButttonPressed(
+                                                              landname:
+                                                                  landname.text,
+                                                              crop:
+                                                                  cropname.text,
+                                                              postalcode:
+                                                                  postalcode
+                                                                      .text,
+                                                              stationserial:
+                                                                  serial.text));
+                                                      setState(() {
+                                                        Navigator.pop(context);
+                                                        bloc.add(
+                                                            ViewLandsEvent());
+                                                        // bloc.add(ResetEvent());
+                                                      });
+                                                    },
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: w * .02),
+                                                  child: Container(
+                                                    width: w * .3,
+                                                    height: h * .08,
+                                                    alignment: Alignment.center,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.red,
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10)),
+                                                    ),
+                                                    child: InkWell(
+                                                      child: Text(
+                                                        'Cancel',
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                      onTap: () {
+                                                        setState(() {
+                                                          Navigator.pop(
+                                                              context);
+                                                          bloc.add(
+                                                              ViewLandsEvent());
+                                                          // bloc.add(
+                                                          //     ResetEvent());
+                                                        });
+                                                      },
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            )),
+                                      ],
+                                    )),
+                                  );
+                                },
+                              );
+                            }),
                       ],
                     )
                   ],
                 );
+              } else if (state is AddlandButtonEvent) {
+                return Stack();
               } else if (state is ViewLandSuccessState) {
                 return Stack(
                   children: [
@@ -345,14 +320,58 @@ class _MyLandsPagestate extends State<MyLandsPage> {
                                                       width: 0.5))),
                                           child: TabBarView(children: <Widget>[
                                             Container(
-                                              child: Center(
-                                                child: Text('Display Info',
-                                                    style: TextStyle(
-                                                        fontSize: 22,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                              ),
-                                            ),
+                                                child: state.land.history
+                                                            .length ==
+                                                        0
+                                                    ? Center(
+                                                        child: Text(
+                                                            'No data available',
+                                                            style: TextStyle(
+                                                                fontSize: 22,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
+                                                      )
+                                                    : Center(
+                                                        child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                            Text(
+                                                                'Title: ' +
+                                                                    state.land
+                                                                        .title,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        22,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                            Text(
+                                                                'Crop: ' +
+                                                                    state.land
+                                                                        .crop,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        22,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                            Text(
+                                                                'Postal Code: ' +
+                                                                    state.land
+                                                                        .postalCode,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        22,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                          ]))),
                                             Container(
                                               child:
                                                   state.land.history.length == 0

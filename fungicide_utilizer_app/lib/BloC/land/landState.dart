@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:fungicide_utilizer_app/DataLayer/land.dart';
-// import '../../DataLayer/land.dart';
 
 class LandState extends Equatable {
   @override
@@ -26,4 +25,16 @@ class ErrorState extends LandState {
 class ViewLandSuccessState extends LandState {
   final LandModel land;
   ViewLandSuccessState({this.land});
+}
+
+class AddingLandState extends LandState {}
+
+class AddLandSuccessState extends LandState {
+  final String message;
+  AddLandSuccessState({this.message});
+}
+
+class ConnectionErrorState extends LandState {
+  final String message;
+  ConnectionErrorState({this.message});
 }

@@ -27,7 +27,7 @@ class CropsBloc extends Bloc<CropsEvents, CropsStates> {
     } else if (event is ViewDiseasesEvent) {
       yield LoadingState();
       try {
-        yield ViewDiseasesSuccess(diseases: event.crop.diseases);
+        yield ViewDiseasesSuccess(diseases: event.cropp.diseases);
       } catch (e) {
         yield ErrorState(message: e.toString());
       }
