@@ -4,7 +4,6 @@
 //   DateTime date;
 //   String image;
 // }
-import 'dart:typed_data';
 
 class News {
   String id;

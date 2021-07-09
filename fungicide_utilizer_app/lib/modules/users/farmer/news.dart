@@ -77,8 +77,8 @@ class _FarmerHomestate extends State<FarmerHome> {
 
   @override
   Widget build(BuildContext context) {
-    var h = MediaQuery.of(context).size.height;
-    var w = MediaQuery.of(context).size.width;
+    // var h = MediaQuery.of(context).size.height;
+    // var w = MediaQuery.of(context).size.width;
 
     ScreenUtil.init(context,
         designSize: Size(750, 1334), allowFontScaling: false);
