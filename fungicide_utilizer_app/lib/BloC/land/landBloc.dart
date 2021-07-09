@@ -38,10 +38,15 @@ class LandBloc extends Bloc<LandEvent, LandState> {
         yield ConnectionErrorState(message: "Connection time out. ");
       else if (data == "Invalid") {
         yield ConnectionErrorState(message: "Invalid Credintials.");
-      } else /*if (data == "8")*/ {
+      } else {
         yield AddLandSuccessState(message: "Land Added Successfully.");
-        // } else {
-        //   print("mafeesh data api msht3'lsh $data");
+      }
+    } else if (event is DeleteLandButtonPressed) {
+      var data = await repo.deleteLand(event.landid);
+      if (data == "Error")
+        yield ConnectionErrorState(message: "Connection time out. ");
+      else {
+        yield DeleteLandSuccessState(message: "Land Added Successfully.");
       }
     }
   }

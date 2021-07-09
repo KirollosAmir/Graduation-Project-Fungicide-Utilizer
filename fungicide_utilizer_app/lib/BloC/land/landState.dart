@@ -38,3 +38,10 @@ class ConnectionErrorState extends LandState {
   final String message;
   ConnectionErrorState({this.message});
 }
+
+class DeleteLandState extends LandState {}
+
+class DeleteLandSuccessState extends LandState {
+  final String message;
+  DeleteLandSuccessState({this.message});
+}

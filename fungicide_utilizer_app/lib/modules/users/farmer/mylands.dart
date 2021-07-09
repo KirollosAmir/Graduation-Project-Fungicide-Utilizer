@@ -93,6 +93,37 @@ class _MyLandsPagestate extends State<MyLandsPage> {
                                         bloc.add(
                                             ViewLandEvent(state.lands[index]));
                                       },
+                                      onLongPress: () {
+                                        return showDialog<void>(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text('Alert Dialog !'),
+                                              content: Text(
+                                                  "Are You Sure Want To Delete This Land ?"),
+                                              actions: <Widget>[
+                                                FlatButton(
+                                                  child: Text("YES"),
+                                                  onPressed: () {
+                                                    bloc.add(
+                                                        DeleteLandButtonPressed(
+                                                            state.lands[index]
+                                                                .id));
+                                                    Navigator.of(context).pop();
+                                                    bloc.add(ViewLandsEvent());
+                                                  },
+                                                ),
+                                                FlatButton(
+                                                  child: Text("NO"),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
                                     ),
                                   );
                                 }),

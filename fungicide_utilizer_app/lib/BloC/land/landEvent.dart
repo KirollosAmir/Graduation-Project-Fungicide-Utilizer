@@ -38,7 +38,7 @@ class AddlandButtonEvent extends LandEvent {}
 // ignore: must_be_immutable
 class DeleteLandButtonPressed extends LandEvent {
   String landid;
-  DeleteLandButtonPressed({this.landid});
+  DeleteLandButtonPressed(this.landid);
 }
 
 // class NotificationSeen extends LandEvent {}
