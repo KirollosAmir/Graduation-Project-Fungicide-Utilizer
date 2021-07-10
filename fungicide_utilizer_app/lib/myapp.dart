@@ -3,15 +3,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fungicide_utilizer_app/BloC/ExpertAuth/expert_auth_bloc.dart';
 import 'package:fungicide_utilizer_app/BloC/ExpertAuth/expert_auth_state.dart';
 import 'package:fungicide_utilizer_app/BloC/crops_bloc/crops_bloc.dart';
+import 'package:fungicide_utilizer_app/BloC/fungicides/fungicides_bloc.dart';
+import 'package:fungicide_utilizer_app/BloC/fungicides/fungicides_state.dart';
 import 'package:fungicide_utilizer_app/BloC/news/newsBloc.dart';
 import 'package:fungicide_utilizer_app/BloC/news/newsState.dart';
+import 'package:fungicide_utilizer_app/modules/users/Expert/expertHome.dart';
 import 'package:fungicide_utilizer_app/repository/crops_repo.dart';
+import 'package:fungicide_utilizer_app/repository/disease_repo.dart';
+import 'package:fungicide_utilizer_app/repository/fungicide_repo.dart';
 import 'package:fungicide_utilizer_app/repository/news_repo.dart';
 import 'package:fungicide_utilizer_app/repository/notifications_repo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'BloC/authentication/authentication_bloc.dart';
 import 'BloC/authentication/authentication_state.dart';
 import 'BloC/crops_bloc/crops_states.dart';
+import 'BloC/diseases/disaeses_bloc.dart';
+import 'BloC/diseases/diseases_state.dart';
 import 'BloC/land/landBloc.dart';
 import 'BloC/land/landState.dart';
 import 'BloC/notification/notificationState.dart';
@@ -35,6 +42,7 @@ class _MyAppState extends State<MyApp> {
   bool _status = false;
   // ignore: avoid_init_to_null
   String _id = null;
+  String _type = "";
 
   @override
   void initState() {
@@ -48,8 +56,20 @@ class _MyAppState extends State<MyApp> {
       _status = (prefs.getBool('isLoggedIn') ?? false);
       //_id = (prefs.getString('id') ?? null);
       _id = prefs.getString('ID');
-      print("status is $_status id is $_id");
+      _type = (prefs.getString('Type'));
+      print("status is $_status id is $_id type is $_type");
     });
+  }
+
+  Widget testUser(String type) {
+    if (type == 'Expert') {
+      print(type);
+      return ExpertHome();
+    } else if (_type == "Farmer") {
+      print(type);
+      return FarmerHome();
+    } else
+      return WelcomePage();
   }
 
   //     Future<bool> getpref() async {
@@ -96,15 +116,24 @@ class _MyAppState extends State<MyApp> {
           BlocProvider(create: (BuildContext context) {
             return NewsBloc(NewsInitialState(), NewsRepos());
           }),
-          //view all crops bloc
+          // crops bloc
           BlocProvider(create: (BuildContext context) {
             return CropsBloc(InitialState(), CropsRepository());
+          }),
+          // diseases bloc
+          BlocProvider(create: (BuildContext context) {
+            return DiseasesBloc(DiseasesInitialState(), DiseaseRepository());
+          }),
+          // fungicides bloc
+          BlocProvider(create: (BuildContext context) {
+            return FungicidesBloc(
+                FungicidesInitialState(), FungicidesRepository());
           }),
         ],
         child: MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Fungicides Utilizer',
             theme: new ThemeData(primarySwatch: Colors.green),
-            home: _status == false ? WelcomePage() : FarmerHome()));
+            home: _status == false ? WelcomePage() : testUser(_type)));
   }
 }

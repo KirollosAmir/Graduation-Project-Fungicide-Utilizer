@@ -46,3 +46,10 @@ class ErrorState extends CropsStates {
   final String message;
   ErrorState({this.message});
 }
+
+class AddingCropState extends CropsStates {}
+
+class AddCropSuccessState extends CropsStates {
+  final String message;
+  AddCropSuccessState({this.message});
+}

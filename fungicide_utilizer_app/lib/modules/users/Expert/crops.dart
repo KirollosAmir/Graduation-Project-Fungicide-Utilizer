@@ -4,22 +4,21 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fungicide_utilizer_app/BloC/crops_bloc/crops_bloc.dart';
 import 'package:fungicide_utilizer_app/BloC/crops_bloc/crops_events.dart';
 import 'package:fungicide_utilizer_app/BloC/crops_bloc/crops_states.dart';
-import 'package:fungicide_utilizer_app/shared/components/drawer.dart';
+import 'package:fungicide_utilizer_app/shared/components/expertDrawer.dart';
 
-class CropsPage extends StatefulWidget {
-  _CropsPagestate createState() => _CropsPagestate();
+class Crops extends StatefulWidget {
+  @override
+  _CropsState createState() => _CropsState();
 }
 
-class _CropsPagestate extends State<CropsPage> {
-  TextEditingController landname = TextEditingController();
+class _CropsState extends State<Crops> {
   TextEditingController cropname = TextEditingController();
-  TextEditingController postalcode = TextEditingController();
-  TextEditingController serial = TextEditingController();
+  TextEditingController duration = TextEditingController();
   PageController controller = PageController();
-  var names = ['Status', 'History'],
+  // ignore: unused_field
+  int _curr = 0;
+  var names = ['Crops', 'Disease', 'Fungicide'],
       colors = [Colors.green.withOpacity(.5), Colors.white];
-  // ignore: non_constant_identifier_names
-  // var ListData = ['My land '];
   bool checkPage = false;
   CropsBloc bloc;
   @override
@@ -40,7 +39,7 @@ class _CropsPagestate extends State<CropsPage> {
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
-    // var w = MediaQuery.of(context).size.width;
+    var w = MediaQuery.of(context).size.width;
 
     ScreenUtil.init(context,
         designSize: Size(750, 1334), allowFontScaling: false);
@@ -51,8 +50,122 @@ class _CropsPagestate extends State<CropsPage> {
             textAlign: TextAlign.center,
           ),
           backgroundColor: Colors.green,
+          actions: <Widget>[
+            FlatButton(
+              textColor: Colors.white,
+              onPressed: () {
+                //bloc.add(AddCropsButtonEvent());
+                return showDialog<void>(
+                  context: context,
+                  barrierDismissible: false, // user must tap button!
+                  builder: (BuildContext context) {
+                    ScreenUtil.init(context,
+                        designSize: Size(750, 1334), allowFontScaling: false);
+                    return AlertDialog(
+                      content: SingleChildScrollView(
+                          child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(top: h * .01),
+                            child: TextFormField(
+                              controller: cropname,
+                              decoration: const InputDecoration(
+                                hintText: 'Crop Name.',
+                              ),
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'Please enter land name';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: h * .01),
+                            child: TextFormField(
+                              controller: duration,
+                              decoration: const InputDecoration(
+                                hintText: 'Duration .',
+                              ),
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'Please enter a crop name.';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          Padding(
+                              padding: EdgeInsets.only(top: h * .05),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: w * .3,
+                                    height: h * .08,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                    ),
+                                    child: InkWell(
+                                      child: Text('Save',
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                      onTap: () {
+                                        bloc.add(SaveCropButttonPressed(
+                                          cropname: cropname.text,
+                                          duration: duration.text,
+                                        ));
+                                        setState(() {
+                                          Navigator.pop(context);
+                                          bloc.add(ViewCropsEvent());
+                                          // bloc.add(ResetEvent());
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: w * .02),
+                                    child: Container(
+                                      width: w * .3,
+                                      height: h * .08,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10)),
+                                      ),
+                                      child: InkWell(
+                                        child: Text(
+                                          'Cancel',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        onTap: () {
+                                          setState(() {
+                                            Navigator.pop(context);
+                                            bloc.add(ViewCropsEvent());
+                                            // bloc.add(
+                                            //     ResetEvent());
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              )),
+                        ],
+                      )),
+                    );
+                  },
+                );
+              },
+              child: Text("New Crop"),
+              shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
+            ),
+          ],
         ),
-        drawer: FarmerDrawer(context),
+        drawer: ExpertDrawer(context),
         //resizeToAvoidBottomPadding: false,
         body: Center(
           child: BlocBuilder<CropsBloc, CropsStates>(
@@ -187,6 +300,9 @@ class _CropsPagestate extends State<CropsPage> {
                   ],
                 );
               }
+              // else if (state is AddingCropState) {
+              //   return Container();
+              // }
             },
           ),
         ));

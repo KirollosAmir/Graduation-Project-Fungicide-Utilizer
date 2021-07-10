@@ -38,3 +38,13 @@ class ViewTreatmentEvent extends CropsEvents {
   final Treatment treatment;
   ViewTreatmentEvent(this.treatment);
 }
+
+class AddCropsButtonEvent extends CropsEvents {}
+
+// ignore: must_be_immutable
+class SaveCropButttonPressed extends CropsEvents {
+  String cropname;
+  String duration;
+
+  SaveCropButttonPressed({this.cropname, this.duration});
+}

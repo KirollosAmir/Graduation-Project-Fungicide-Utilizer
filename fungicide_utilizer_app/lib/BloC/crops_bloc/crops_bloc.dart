@@ -52,6 +52,15 @@ class CropsBloc extends Bloc<CropsEvents, CropsStates> {
       } catch (e) {
         yield ErrorState(message: e.toString());
       }
+    } else if (event is SaveCropButttonPressed) {
+      var data = await repo.addCrop(event.cropname, event.duration);
+      if (data == "Error")
+        yield ErrorState(message: "Connection time out. ");
+      else if (data == "Invalid") {
+        yield ErrorState(message: "Invalid Credintials.");
+      } else {
+        yield ErrorState(message: "Land Added Successfully.");
+      }
     }
   }
 }

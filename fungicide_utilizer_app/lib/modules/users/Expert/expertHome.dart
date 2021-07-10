@@ -1,138 +1,108 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/screenutil.dart';
-import 'package:fungicide_utilizer_app/shared/components/drawer.dart';
+import 'package:fungicide_utilizer_app/BloC/news/newsBloc.dart';
+import 'package:fungicide_utilizer_app/BloC/news/newsEvent.dart';
+import 'package:fungicide_utilizer_app/BloC/news/newsState.dart';
+import 'dart:convert';
+import 'package:fungicide_utilizer_app/shared/components/expertDrawer.dart';
 
 class ExpertHome extends StatefulWidget {
-  ExpertHome_state createState() => ExpertHome_state();
+  _ExpertHomestate createState() => _ExpertHomestate();
 }
 
 // ignore: camel_case_types
-class ExpertHome_state extends State<ExpertHome> {
+class _ExpertHomestate extends State<ExpertHome> {
+  NewsBloc bloc;
   PageController controller = PageController();
-
-  // ignore: unused_field
-  int _curr = 0;
-  var names = ['Crops', 'Disease', 'Fungicide'],
-      colors = [Colors.green.withOpacity(.5), Colors.white, Colors.white];
 
   @override
   void initState() {
+    bloc = BlocProvider.of<NewsBloc>(context);
+    bloc.add(ViewNewsEvent());
+
     setState(() {});
 
     super.initState();
   }
 
-  // ignore: non_constant_identifier_names
-  Widget FirstWidget(h, w) {
-    return ListView(
-      children: [
-        Padding(
-          padding: EdgeInsets.only(top: h * .05, left: w * .02, right: w * .02),
-          child: Container(
-            height: h * .2,
-            width: w * .6,
-            child: Image.asset('images/man.png'),
-          ),
-        )
-      ],
-    );
-  }
-
-  // ignore: non_constant_identifier_names
-  Widget SecWidget(h, w) {
-    return ListView(
-      children: [
-        Padding(
-          padding: EdgeInsets.only(top: h * .05, left: w * .02, right: w * .02),
-        )
-      ],
-    );
-  }
-
-  // ignore: non_constant_identifier_names
-  Widget ThirdWidget(h, w) {
-    return ListView(
-      children: [
-        Padding(
-          padding: EdgeInsets.only(top: h * .05, left: w * .02, right: w * .02),
-        )
-      ],
-    );
+  @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    var h = MediaQuery.of(context).size.height;
-    var w = MediaQuery.of(context).size.width;
+    // var h = MediaQuery.of(context).size.height;
+    // var w = MediaQuery.of(context).size.width;
 
     ScreenUtil.init(context,
         designSize: Size(750, 1334), allowFontScaling: false);
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'My Farm',
-            textAlign: TextAlign.center,
-          ),
-          backgroundColor: Colors.green,
+      appBar: AppBar(
+        title: const Text(
+          'News',
+          textAlign: TextAlign.center,
         ),
-        drawer: FarmerDrawer(context),
-        body: Stack(
-          children: [
-            Container(
-              height: h * .14,
-              child: Column(
-                children: [
-                  Container(
-                    height: h * .08,
-                    child: Row(
-                      children: [
-                        for (int i = 0; i < 3; i++)
-                          Container(
-                            width: w / 3,
-                            height: h * .09,
-                            alignment: Alignment.center,
-                            color: colors[i],
-                            child: Text(names[i]),
+        backgroundColor: Colors.green,
+      ),
+      drawer: ExpertDrawer(context),
+      body: BlocBuilder<NewsBloc, NewsState>(
+        // ignore: missing_return
+        builder: (context, state) {
+          if (state is NewsInitialState) {
+            return Center(child: CircularProgressIndicator());
+          } else if (state is NewsLoadingState) {
+            return Center(child: CircularProgressIndicator());
+          } else if (state is NewsSuccessState) {
+            return Stack(children: [
+              new GestureDetector(
+                  onTap: () {
+                    //  // openDetailsUI(post);
+                  },
+                  child: ListView.builder(
+                      itemCount: state.news.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        var _image = base64Decode('${state.news[index].image}');
+                        return Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 5.0, vertical: 5.0),
+                          child: new Card(
+                            elevation: 3.0,
+                            child: new Row(
+                              children: <Widget>[
+                                new Container(
+                                  width: 150.0,
+                                  child: Flexible(
+                                    child:
+                                        Image.memory(_image, fit: BoxFit.fill),
+                                  ),
+                                  // child: new Image.network(
+                                  //   post.thumbUrl,
+                                  //   fit: BoxFit.cover,
+                                  // ),
+                                ),
+                                new Expanded(
+                                    child: new Container(
+                                  margin: new EdgeInsets.all(10.0),
+                                  child: new Text(
+                                    '${state.news[index].title}',
+                                    style: new TextStyle(
+                                        color: Colors.black, fontSize: 18.0),
+                                  ),
+                                )),
+                              ],
+                            ),
                           ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                      child: Divider(
-                    color: Colors.black,
-                    height: 3,
-                  )),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: h * .08),
-              child: Container(
-                  height: h * .8,
-                  child: PageView(
-                    children: <Widget>[
-                      FirstWidget(h, w),
-                      SecWidget(h, w),
-                      ThirdWidget(h, w)
-                    ],
-                    scrollDirection: Axis.horizontal,
-                    controller: controller,
-                    onPageChanged: (num) {
-                      setState(() {
-                        _curr = num;
-                        print(num);
-                        for (int j = 0; j < 3; j++) {
-                          if (j != num) {
-                            colors[j] = Colors.white;
-                          } else {
-                            colors[j] = Colors.green.withOpacity(.5);
-                          }
-                        }
-                      });
-                    },
-                  )),
-            ),
-          ],
-        ));
+                        );
+                      })),
+            ]);
+          } else if (state is NewsErrorState) {
+            return Text(state.message);
+          }
+        },
+      ),
+    );
   }
 }

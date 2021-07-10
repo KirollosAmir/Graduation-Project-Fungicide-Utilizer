@@ -19,6 +19,7 @@ class ExpertAuthenticationRepos {
         var id = response.body;
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs?.setString('ID', id);
+        prefs?.setString('Type', 'Expert');
         prefs?.setBool("isLoggedIn", true);
         var x = prefs.getString('ID');
         print(x);
