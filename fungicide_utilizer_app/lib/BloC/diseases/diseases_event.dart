@@ -38,3 +38,5 @@ class SaveDiseaseButttonPressed extends DiseasesEvents {
 
   SaveDiseaseButttonPressed({this.diseasename, this.severity, this.symptoms});
 }
+
+class ViewFungicidesEvent extends DiseasesEvents {}

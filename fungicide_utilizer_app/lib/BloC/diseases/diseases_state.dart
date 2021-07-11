@@ -42,3 +42,8 @@ class AddDiseaseSuccessState extends DiseasesStates {
   final String message;
   AddDiseaseSuccessState({this.message});
 }
+
+class ViewFungicidesSuccess extends DiseasesStates {
+  final List<Treatment> treatments;
+  ViewFungicidesSuccess({this.treatments});
+}

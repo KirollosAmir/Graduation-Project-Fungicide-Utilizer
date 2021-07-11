@@ -28,4 +28,18 @@ class NotificationRepos {
       return notifications;
     }
   }
+
+  isSeen(String id) async {
+    var url = Uri.parse(
+        'https://fungicidesutilizer.000webhostapp.com/APIs/notificationseen.php?id=' +
+            id);
+
+    var response = await http.post(url);
+    print(response.body);
+    if (response.body == "Success") {
+      return response.body;
+    } else {
+      return "failed";
+    }
+  }
 }

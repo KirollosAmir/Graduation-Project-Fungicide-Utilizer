@@ -26,7 +26,14 @@ import 'BloC/notification/notificatioBloc.dart';
 import 'BloC/register/registerBloc.dart';
 import 'BloC/register/registerState.dart';
 import 'modules/home/myHomeScreen.dart';
+import 'modules/users/Expert/crops.dart';
+import 'modules/users/Expert/diseases.dart';
+import 'modules/users/Expert/fungicides.dart';
+import 'modules/users/farmer/allcrops.dart';
+import 'modules/users/farmer/cropchecker.dart';
+import 'modules/users/farmer/mylands.dart';
 import 'modules/users/farmer/news.dart';
+import 'modules/users/farmer/notifications.dart';
 import 'repository/authentication_repo.dart';
 import 'repository/expertAuth_repo.dart';
 import 'repository/mylands_repo.dart';
@@ -65,19 +72,12 @@ class _MyAppState extends State<MyApp> {
     if (type == 'Expert') {
       print(type);
       return ExpertHome();
-    } else if (_type == "Farmer") {
+    } else if (type == "farmer") {
       print(type);
       return FarmerHome();
     } else
       return WelcomePage();
   }
-
-  //     Future<bool> getpref() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   var status = prefs.getBool('isLoggedIn') ?? false;
-  //   print(status);
-  //   return status;
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -134,6 +134,22 @@ class _MyAppState extends State<MyApp> {
             debugShowCheckedModeBanner: false,
             title: 'Fungicides Utilizer',
             theme: new ThemeData(primarySwatch: Colors.green),
-            home: _status == false ? WelcomePage() : testUser(_type)));
+            // home: _status == false ? WelcomePage() : testUser(_type),
+            initialRoute: '/',
+            routes: {
+              // When navigating to the "/" route, build the HomePage widget.
+              '/': (context) =>
+                  _status == false ? WelcomePage() : testUser(_type),
+              '/FarmerLands': (context) => MyLandsPage(),
+              '/FarmerNotifications': (context) => Notifcations(),
+              '/AllCrops': (context) => CropsPage(),
+              '/FarmerCropChecker': (context) => CropChecker(),
+              '/FarmerHome': (context) => FarmerHome(),
+              '/ExpertHome': (context) => ExpertHome(),
+              '/Crops': (context) => Crops(),
+              '/Diseases': (context) => Diseases(),
+              '/Fungicides': (context) => Fungicides(),
+              '/Welcome': (context) => WelcomePage(),
+            }));
   }
 }

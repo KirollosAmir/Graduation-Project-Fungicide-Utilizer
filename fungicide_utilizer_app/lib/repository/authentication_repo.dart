@@ -61,5 +61,17 @@ class AuthenticationRepos {
 
     var response = await http.post(url);
     print(response.body);
+    if (response.body == "Failed") {
+      return "Invalid";
+    } else {
+      var id = response.body;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs?.setString('ID', id);
+      prefs?.setString('Type', 'farmer');
+      prefs?.setBool("isLoggedIn", true);
+      var x = prefs.getString('ID');
+      print(x);
+      return response.body;
+    }
   }
 }

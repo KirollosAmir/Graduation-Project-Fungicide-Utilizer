@@ -1,10 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fungicide_utilizer_app/modules/home/myHomeScreen.dart';
-import 'package:fungicide_utilizer_app/modules/users/farmer/allcrops.dart';
-import 'package:fungicide_utilizer_app/modules/users/farmer/cropchecker.dart';
-import 'package:fungicide_utilizer_app/modules/users/farmer/mylands.dart';
-import 'package:fungicide_utilizer_app/modules/users/farmer/news.dart';
-import 'package:fungicide_utilizer_app/modules/users/farmer/notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: non_constant_identifier_names
@@ -33,8 +27,9 @@ Widget FarmerDrawer(context) {
           title: Text('Home'),
           trailing: Icon(Icons.home),
           onTap: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => FarmerHome()));
+            Navigator.pushNamed(context, '/FarmerHome');
+            // Navigator.of(context).pushReplacement(MaterialPageRoute(
+            //     builder: (BuildContext context) => FarmerHome()));
           },
         ),
       ),
@@ -44,8 +39,9 @@ Widget FarmerDrawer(context) {
           title: Text('Notifications'),
           trailing: Icon(Icons.notifications),
           onTap: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => Notifcations()));
+            Navigator.pushReplacementNamed(context, '/FarmerNotifications');
+            // Navigator.of(context).pushReplacement(MaterialPageRoute(
+            //     builder: (BuildContext context) => Notifcations()));
           },
         ),
       ),
@@ -55,8 +51,9 @@ Widget FarmerDrawer(context) {
           title: Text('My Lands'),
           trailing: Icon(Icons.landscape),
           onTap: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => MyLandsPage()));
+            Navigator.pushNamed(context, '/FarmerLands');
+            // Navigator.of(context).pushReplacement(MaterialPageRoute(
+            //     builder: (BuildContext context) => MyLandsPage()));
           },
         ),
       ),
@@ -66,8 +63,9 @@ Widget FarmerDrawer(context) {
           title: Text('Crop Checker'),
           trailing: Icon(Icons.scanner),
           onTap: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => CropChecker()));
+            Navigator.pushNamed(context, '/FarmerCropChecker');
+            // Navigator.of(context).pushReplacement(MaterialPageRoute(
+            //     builder: (BuildContext context) => CropChecker()));
           },
         ),
       ),
@@ -77,8 +75,9 @@ Widget FarmerDrawer(context) {
           title: Text('All Crops'),
           trailing: Icon(Icons.create),
           onTap: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => CropsPage()));
+            Navigator.pushNamed(context, '/AllCrops');
+            // Navigator.of(context).pushReplacement(MaterialPageRoute(
+            //     builder: (BuildContext context) => CropsPage()));
           },
         ),
       ),
@@ -105,8 +104,9 @@ Widget FarmerDrawer(context) {
             final prefs = await SharedPreferences.getInstance();
             prefs.remove('ID');
             prefs.remove('isLoggedIn');
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => WelcomePage()));
+            Navigator.pushNamed(context, '/Welcome');
+            // Navigator.of(context).pushReplacement(MaterialPageRoute(
+            //     builder: (BuildContext context) => WelcomePage()));
             print("you loged out $prefs");
           },
         ),

@@ -19,8 +19,6 @@ class _DiseasesState extends State<Diseases> {
   PageController controller = PageController();
   // ignore: unused_field
   int _curr = 0;
-  var names = ['Crops', 'Disease', 'Fungicide'],
-      colors = [Colors.green.withOpacity(.5), Colors.white];
   bool checkPage = false;
   DiseasesBloc bloc;
   @override
@@ -232,52 +230,204 @@ class _DiseasesState extends State<Diseases> {
                     )
                   ],
                 );
-              } else if (state is ViewDiseaseSuccess) {
+              }
+              //else if (state is ViewDiseaseSuccess) {
+              //   return Stack(
+              //     children: [
+              //       Column(
+              //         children: [
+              //           Container(
+              //             child: Container(
+              //               height: h * .6,
+              //               decoration: BoxDecoration(
+              //                 borderRadius:
+              //                     BorderRadius.all(Radius.circular(10)),
+              //               ),
+              //               child: ListView.builder(
+              //                   itemCount: state.disease.treatments.length,
+              //                   itemBuilder: (BuildContext context, int index) {
+              //                     return Container(
+              //                       child: InkWell(
+              //                         child: Card(
+              //                           child: ListTile(
+              //                             title: Text(
+              //                                 '${state.disease.treatments[index].name}'),
+              //                             subtitle: Text(
+              //                                 '${state.disease.treatments[index].description}'),
+              //                           ),
+              //                         ),
+              //                         onTap: () {
+              //                           checkPage = true;
+              //                         },
+              //                       ),
+              //                     );
+              //                   }),
+              //             ),
+              //           ),
+              //         ],
+              //       )
+              //     ],
+              //   );
+              // }
+              else if (state is ViewDiseaseSuccess) {
                 return Stack(
                   children: [
-                    Column(
-                      children: [
-                        Container(
-                          child: Container(
-                            height: h * .6,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                            ),
-                            child: ListView.builder(
-                                itemCount: state.disease.treatments.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Container(
-                                    child: InkWell(
-                                      child: Card(
-                                        child: ListTile(
-                                          title: Text(
-                                              '${state.disease.treatments[index].name}'),
-                                          subtitle: Text(
-                                              '${state.disease.treatments[index].description}'),
+                    Container(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            DefaultTabController(
+                                length: 3, // length of tabs
+                                initialIndex: 0,
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: <Widget>[
+                                      Container(
+                                        child: TabBar(
+                                          labelColor: Colors.green,
+                                          unselectedLabelColor: Colors.black,
+                                          tabs: [
+                                            Tab(text: 'Info'),
+                                            Tab(text: 'Treatments'),
+                                            Tab(text: 'Add Treatment'),
+                                          ],
                                         ),
                                       ),
-                                      onTap: () {
-                                        checkPage = true;
-                                        // bloc.add(ViewCropEvent());
-                                        // bloc.add(
-                                        //     ViewCropEvent(state.crops[index]));
-                                        // bloc.add(ViewTreatmentsEvent(
-                                        //     state.crop.diseases[index]));
-                                      },
-                                    ),
-                                  );
-                                }),
-                          ),
-                        ),
-                      ],
-                    )
+                                      Container(
+                                          height: 600, //height of TabBarView
+                                          decoration: BoxDecoration(
+                                              border: Border(
+                                                  top: BorderSide(
+                                                      color: Colors.grey,
+                                                      width: 0.5))),
+                                          child: TabBarView(children: <Widget>[
+                                            Container(
+                                                child: state.disease.treatments
+                                                            .length ==
+                                                        0
+                                                    ? Center(
+                                                        child: Text(
+                                                            'No data available',
+                                                            style: TextStyle(
+                                                                fontSize: 22,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
+                                                      )
+                                                    : Center(
+                                                        child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                            Text(
+                                                                'Name: ' +
+                                                                    state
+                                                                        .disease
+                                                                        .name,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        22,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                            Text(
+                                                                'Severity: ' +
+                                                                    state
+                                                                        .disease
+                                                                        .severity,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        22,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                            Text(
+                                                                'Symptoms: ' +
+                                                                    state
+                                                                        .disease
+                                                                        .symptoms,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        22,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                          ]))),
+                                            Container(
+                                              child:
+                                                  state.disease.treatments
+                                                              .length ==
+                                                          0
+                                                      ? Center(
+                                                          child: Text(
+                                                              'No data available',
+                                                              style: TextStyle(
+                                                                  fontSize: 22,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold)),
+                                                        )
+                                                      : Column(children: [
+                                                          Stack(
+                                                            children: [
+                                                              Column(
+                                                                children: [
+                                                                  Container(
+                                                                    child:
+                                                                        Container(
+                                                                      height:
+                                                                          h * .6,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.all(Radius.circular(10)),
+                                                                      ),
+                                                                      child: ListView.builder(
+                                                                          itemCount: state.disease.treatments.length,
+                                                                          itemBuilder: (BuildContext context, int index) {
+                                                                            return Container(
+                                                                              child: InkWell(
+                                                                                child: Card(
+                                                                                  child: ListTile(
+                                                                                    title: Text('${state.disease.treatments[index].name}'),
+                                                                                    subtitle: Text('${state.disease.treatments[index].description}'),
+                                                                                  ),
+                                                                                ),
+                                                                                onTap: () {
+                                                                                  checkPage = true;
+                                                                                },
+                                                                              ),
+                                                                            );
+                                                                          }),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ]),
+                                            ),
+                                            Container(
+                                              child: Column(children: [
+                                                // Text('Display History',
+                                                //     style: TextStyle(
+                                                //         fontSize: 22,
+                                                //         fontWeight:
+                                                //             FontWeight.bold)),
+                                              ]),
+                                            ),
+                                          ]))
+                                    ])),
+                          ]),
+                    ),
                   ],
                 );
               }
-              // else if (state is AddingCropState) {
-              //   return Container();
-              // }
             },
           ),
         ));

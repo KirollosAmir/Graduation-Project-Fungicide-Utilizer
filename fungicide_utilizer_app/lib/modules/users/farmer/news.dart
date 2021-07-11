@@ -100,46 +100,41 @@ class _FarmerHomestate extends State<FarmerHome> {
             return Center(child: CircularProgressIndicator());
           } else if (state is NewsSuccessState) {
             return Stack(children: [
-              new GestureDetector(
-                  onTap: () {
-                    //  // openDetailsUI(post);
-                  },
-                  child: ListView.builder(
-                      itemCount: state.news.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        var _image = base64Decode('${state.news[index].image}');
-                        return Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 5.0, vertical: 5.0),
-                          child: new Card(
-                            elevation: 3.0,
-                            child: new Row(
-                              children: <Widget>[
-                                new Container(
-                                  width: 150.0,
-                                  child: Flexible(
-                                    child:
-                                        Image.memory(_image, fit: BoxFit.fill),
-                                  ),
-                                  // child: new Image.network(
-                                  //   post.thumbUrl,
-                                  //   fit: BoxFit.cover,
-                                  // ),
-                                ),
-                                new Expanded(
-                                    child: new Container(
-                                  margin: new EdgeInsets.all(10.0),
-                                  child: new Text(
-                                    '${state.news[index].title}',
-                                    style: new TextStyle(
-                                        color: Colors.black, fontSize: 18.0),
-                                  ),
-                                )),
-                              ],
+              ListView.builder(
+                  itemCount: state.news.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    var _image = base64Decode('${state.news[index].image}');
+                    return Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 5.0, vertical: 5.0),
+                      child: new Card(
+                        elevation: 3.0,
+                        child: new Row(
+                          children: <Widget>[
+                            new Container(
+                              width: 150.0,
+                              child: Flexible(
+                                child: Image.memory(_image, fit: BoxFit.fill),
+                              ),
+                              // child: new Image.network(
+                              //   post.thumbUrl,
+                              //   fit: BoxFit.cover,
+                              // ),
                             ),
-                          ),
-                        );
-                      })),
+                            new Expanded(
+                                child: new Container(
+                              margin: new EdgeInsets.all(10.0),
+                              child: new Text(
+                                '${state.news[index].title}',
+                                style: new TextStyle(
+                                    color: Colors.black, fontSize: 18.0),
+                              ),
+                            )),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
             ]);
 
             // return Stack(

@@ -191,21 +191,33 @@ class _CropsState extends State<Crops> {
                                 itemCount: state.crops.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return Container(
-                                    child: InkWell(
-                                      child: Card(
-                                        child: ListTile(
-                                          title: Text(
-                                              '${state.crops[index].name}'),
-                                          subtitle:
-                                              Text('${state.crops[index].id}'),
+                                    child: Column(
+                                      children: [
+                                        InkWell(
+                                          child: Card(
+                                            child: ListTile(
+                                              title: Text(
+                                                  '${state.crops[index].name}'),
+                                              subtitle: Text(
+                                                  '${state.crops[index].id}'),
+                                            ),
+                                          ),
+                                          onTap: () {
+                                            checkPage = true;
+                                            // bloc.add(ViewCropEvent());
+                                            bloc.add(ViewCropEvent(
+                                                state.crops[index]));
+                                          },
                                         ),
-                                      ),
-                                      onTap: () {
-                                        checkPage = true;
-                                        // bloc.add(ViewCropEvent());
-                                        bloc.add(
-                                            ViewCropEvent(state.crops[index]));
-                                      },
+                                        // Padding(
+                                        //   padding: EdgeInsetsDirectional.only(
+                                        //       bottom: 4.0, end: 3.0),
+                                        //   child: IconButton(
+                                        //       icon:
+                                        //           Icon(Icons.arrow_forward_ios),
+                                        //       onPressed: () {}),
+                                        // ),
+                                      ],
                                     ),
                                   );
                                 }),

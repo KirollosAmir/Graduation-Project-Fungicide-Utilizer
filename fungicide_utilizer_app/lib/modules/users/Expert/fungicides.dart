@@ -12,15 +12,15 @@ class Fungicides extends StatefulWidget {
 }
 
 class _FungicidesState extends State<Fungicides> {
-  TextEditingController diseasename = TextEditingController();
-  TextEditingController severity = TextEditingController();
-  TextEditingController symptoms = TextEditingController();
-  PageController controller = PageController();
+  TextEditingController fungicidename = TextEditingController();
+  TextEditingController desc = TextEditingController();
+
+  // PageController controller = PageController();
   // ignore: unused_field
   int _curr = 0;
-  var names = ['Crops', 'Disease', 'Fungicide'],
-      colors = [Colors.green.withOpacity(.5), Colors.white];
-  bool checkPage = false;
+  // var names = ['Crops', 'Disease', 'Fungicide'],
+  //     colors = [Colors.green.withOpacity(.5), Colors.white];
+  //bool checkPage = false;
   FungicidesBloc bloc;
   @override
   void initState() {
@@ -69,7 +69,7 @@ class _FungicidesState extends State<Fungicides> {
                           Padding(
                             padding: EdgeInsets.only(top: h * .01),
                             child: TextFormField(
-                              controller: diseasename,
+                              controller: fungicidename,
                               decoration: const InputDecoration(
                                 hintText: 'Fungicide Name.',
                               ),
@@ -84,7 +84,7 @@ class _FungicidesState extends State<Fungicides> {
                           Padding(
                             padding: EdgeInsets.only(top: h * .01),
                             child: TextFormField(
-                              controller: severity,
+                              controller: desc,
                               decoration: const InputDecoration(
                                 hintText: 'Description.',
                               ),
@@ -115,8 +115,8 @@ class _FungicidesState extends State<Fungicides> {
                                               TextStyle(color: Colors.white)),
                                       onTap: () {
                                         bloc.add(SaveFungicidesButttonPressed(
-                                          name: diseasename.text,
-                                          disc: severity.text,
+                                          name: fungicidename.text,
+                                          disc: desc.text,
                                         ));
                                         setState(() {
                                           Navigator.pop(context);
@@ -202,7 +202,7 @@ class _FungicidesState extends State<Fungicides> {
                                         ),
                                       ),
                                       onTap: () {
-                                        checkPage = true;
+                                        // checkPage = true;
                                         // bloc.add(ViewCropEvent());
                                         bloc.add(ViewFungicideEvent(
                                             state.treatments[index]));
@@ -216,48 +216,86 @@ class _FungicidesState extends State<Fungicides> {
                     )
                   ],
                 );
-                // } else if (state is ViewDiseaseSuccess) {
-                //   return Stack(
-                //     children: [
-                //       Column(
-                //         children: [
-                //           Container(
-                //             child: Container(
-                //               height: h * .6,
-                //               decoration: BoxDecoration(
-                //                 borderRadius:
-                //                     BorderRadius.all(Radius.circular(10)),
-                //               ),
-                //               child: ListView.builder(
-                //                   itemCount: state.disease.treatments.length,
-                //                   itemBuilder: (BuildContext context, int index) {
-                //                     return Container(
-                //                       child: InkWell(
-                //                         child: Card(
-                //                           child: ListTile(
-                //                             title: Text(
-                //                                 '${state.disease.treatments[index].name}'),
-                //                             subtitle: Text(
-                //                                 '${state.disease.treatments[index].description}'),
-                //                           ),
-                //                         ),
-                //                         onTap: () {
-                //                           checkPage = true;
-                //                           // bloc.add(ViewCropEvent());
-                //                           // bloc.add(
-                //                           //     ViewCropEvent(state.crops[index]));
-                //                           // bloc.add(ViewTreatmentsEvent(
-                //                           //     state.crop.diseases[index]));
-                //                         },
-                //                       ),
-                //                     );
-                //                   }),
+              } else if (state is ViewFungicideSuccess) {
+                return Container(
+                    child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text('Fungicide Name: ' + state.treatment.name,
+                          style: TextStyle(
+                              fontSize: 22, fontWeight: FontWeight.bold)),
+                      Text('Description: ' + state.treatment.description,
+                          style: TextStyle(
+                              fontSize: 22, fontWeight: FontWeight.bold)),
+                      // Text('Dose: ' + state.treatment.dose,
+                      //     style: TextStyle(
+                      //         fontSize: 22, fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                ));
+                // return Stack(
+                //   children: [
+                //     Container(
+                //         child: Center(
+                //             child: Column(
+                //                 mainAxisAlignment: MainAxisAlignment.center,
+                //                 crossAxisAlignment: CrossAxisAlignment.center,
+                //                 children: [
+                //           Text('Fungicide Name: ' + state.treatment.name,
+                //               style: TextStyle(
+                //                   fontSize: 22, fontWeight: FontWeight.bold)),
+                //           Text('Description: ' + state.treatment.description,
+                //               style: TextStyle(
+                //                   fontSize: 22, fontWeight: FontWeight.bold)),
+                //           Text('Dose: ' + state.treatment.dose,
+                //               style: TextStyle(
+                //                   fontSize: 22, fontWeight: FontWeight.bold)),
+                //         ]))),
+                //   ],
+                // );
+                // return Stack(
+                //   children: [
+                //     Column(
+                //       children: [
+                //         Container(
+                //           child: Container(
+                //             height: h * .6,
+                //             decoration: BoxDecoration(
+                //               borderRadius:
+                //                   BorderRadius.all(Radius.circular(10)),
                 //             ),
+                //             child: ListView.builder(
+                //                 itemCount: state.treatments.length,
+                //                 itemBuilder: (BuildContext context, int index) {
+                //                   return Container(
+                //                     child: InkWell(
+                //                       child: Card(
+                //                         child: ListTile(
+                //                           title: Text(
+                //                               '${state.disease.treatments[index].name}'),
+                //                           subtitle: Text(
+                //                               '${state.disease.treatments[index].description}'),
+                //                         ),
+                //                       ),
+                //                       onTap: () {
+                //                         checkPage = true;
+                //                         // bloc.add(ViewCropEvent());
+                //                         // bloc.add(
+                //                         //     ViewCropEvent(state.crops[index]));
+                //                         // bloc.add(ViewTreatmentsEvent(
+                //                         //     state.crop.diseases[index]));
+                //                       },
+                //                     ),
+                //                   );
+                //                 }),
                 //           ),
-                //         ],
-                //       )
-                //     ],
-                //   );
+                //         ),
+                //       ],
+                //     )
+                //   ],
+                // );
               }
               // else if (state is AddingCropState) {
               //   return Container();

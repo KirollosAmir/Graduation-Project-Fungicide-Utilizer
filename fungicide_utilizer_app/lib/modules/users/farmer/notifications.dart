@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/screenutil.dart';
-import 'package:fungicide_utilizer_app/BloC/notification/NotificatioEvent.dart';
+
 import 'package:fungicide_utilizer_app/BloC/notification/notificatioBloc.dart';
+import 'package:fungicide_utilizer_app/BloC/notification/notificatioEvent.dart';
 import 'package:fungicide_utilizer_app/BloC/notification/notificationState.dart';
 import 'package:fungicide_utilizer_app/shared/components/drawer.dart';
 
@@ -63,22 +64,46 @@ class _Notifcationsstate extends State<Notifcations> {
                             itemBuilder: (BuildContext context, int index) {
                               return Padding(
                                   padding: EdgeInsets.only(
-                                      bottom: h * 0.02,
+                                      bottom: h * 0.001,
                                       left: w * .01,
                                       right: w * .01),
-                                  child: Container(
-                                    height: h * 0.15,
-                                    width: w * 0.914,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.withOpacity(.5),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    child: ListTile(
-                                      subtitle: Text(
-                                          "'${state.notifications[index].date}'"),
-                                      title: Text(
-                                          "'${state.notifications[index].message}'"),
+                                  child: Card(
+                                    child: Container(
+                                      height: h * 0.12,
+                                      width: w * 0.914,
+                                      decoration: BoxDecoration(
+                                        color:
+                                            state.notifications[index].seen ==
+                                                    "1"
+                                                ? Colors.green
+                                                : Colors.blueGrey,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12)),
+                                      ),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          bloc.add(
+                                              SeenNotificationButttonPressed(
+                                                  state.notifications[index]
+                                                      .id));
+                                        },
+                                        child: Center(
+                                          child: ListTile(
+                                            subtitle: Text(
+                                              "'${state.notifications[index].date}'",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            title: Text(
+                                              "'${state.notifications[index].message}'",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ));
                             }),
@@ -89,9 +114,6 @@ class _Notifcationsstate extends State<Notifcations> {
               } else if (state is NotificationErrorState) {
                 return Text(state.message);
               }
-              // ignore: unused_label
-              child:
-              Container();
             },
           ),
         ));

@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fungicide_utilizer_app/modules/home/myHomeScreen.dart';
-import 'package:fungicide_utilizer_app/modules/users/Expert/crops.dart';
-import 'package:fungicide_utilizer_app/modules/users/Expert/diseases.dart';
-import 'package:fungicide_utilizer_app/modules/users/Expert/expertHome.dart';
-import 'package:fungicide_utilizer_app/modules/users/Expert/fungicides.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: non_constant_identifier_names
@@ -32,8 +27,9 @@ Widget ExpertDrawer(context) {
           title: Text('Home'),
           trailing: Icon(Icons.home),
           onTap: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => ExpertHome()));
+            Navigator.pushNamed(context, '/ExpertHome');
+            // Navigator.of(context).pushReplacement(MaterialPageRoute(
+            //     builder: (BuildContext context) => ExpertHome()));
           },
         ),
       ),
@@ -43,8 +39,9 @@ Widget ExpertDrawer(context) {
           title: Text('Crops'),
           trailing: Icon(Icons.notifications),
           onTap: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (BuildContext context) => Crops()));
+            Navigator.pushNamed(context, '/Crops');
+            // Navigator.of(context).pushReplacement(
+            //     MaterialPageRoute(builder: (BuildContext context) => Crops()));
           },
         ),
       ),
@@ -54,8 +51,9 @@ Widget ExpertDrawer(context) {
           title: Text('Diseases'),
           trailing: Icon(Icons.landscape),
           onTap: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => Diseases()));
+            Navigator.pushNamed(context, '/Diseases');
+            // Navigator.of(context).pushReplacement(MaterialPageRoute(
+            //     builder: (BuildContext context) => Diseases()));
           },
         ),
       ),
@@ -65,8 +63,9 @@ Widget ExpertDrawer(context) {
           title: Text('Fungicides'),
           trailing: Icon(Icons.scanner),
           onTap: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => Fungicides()));
+            Navigator.pushNamed(context, '/Fungicides');
+            // Navigator.of(context).pushReplacement(MaterialPageRoute(
+            //     builder: (BuildContext context) => CropChecker()));
           },
         ),
       ),
@@ -76,6 +75,7 @@ Widget ExpertDrawer(context) {
           title: Text('All Crops'),
           trailing: Icon(Icons.create),
           onTap: () {
+            Navigator.pushNamed(context, '/AllCrops');
             // Navigator.of(context).pushReplacement(MaterialPageRoute(
             //     builder: (BuildContext context) => CropsPage()));
           },
@@ -105,8 +105,9 @@ Widget ExpertDrawer(context) {
             prefs.remove('ID');
             prefs.remove('isLoggedIn');
             prefs.remove('Type');
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => WelcomePage()));
+            Navigator.pushNamed(context, '/Welcome');
+            // Navigator.of(context).pushReplacement(MaterialPageRoute(
+            //     builder: (BuildContext context) => WelcomePage()));
             print("you loged out $prefs");
           },
         ),

@@ -26,3 +26,8 @@ class ViewNotificationSuccessState extends NotificationState {
   final Notification notification;
   ViewNotificationSuccessState({this.notification});
 }
+
+class NotificationSeenSuccessState extends NotificationState {
+  final String message;
+  NotificationSeenSuccessState({this.message});
+}

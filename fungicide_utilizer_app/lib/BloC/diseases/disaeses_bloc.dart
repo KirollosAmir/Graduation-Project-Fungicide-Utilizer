@@ -49,5 +49,13 @@ class DiseasesBloc extends Bloc<DiseasesEvents, DiseasesStates> {
         yield ErrorState(message: "Land Added Successfully.");
       }
     }
+    // else if (event is ViewFungicidesEvent) {
+    //   yield DiseasesLoadingState();
+    //   try {
+    //     yield ViewFungicidesSuccess(treatments: event.);
+    //   } catch (e) {
+    //     yield ErrorState(message: e.toString());
+    //   }
+    // }
   }
 }

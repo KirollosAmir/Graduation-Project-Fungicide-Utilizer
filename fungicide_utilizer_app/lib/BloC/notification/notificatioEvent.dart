@@ -14,3 +14,9 @@ class ViewNotificationEvent extends NotificationEvent {
 }
 
 class SeenNotificationEvent extends NotificationEvent {}
+
+class SeenNotificationButttonPressed extends NotificationEvent {
+  final String id;
+
+  SeenNotificationButttonPressed(this.id);
+}

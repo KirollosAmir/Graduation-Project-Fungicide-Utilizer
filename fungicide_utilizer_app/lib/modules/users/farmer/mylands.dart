@@ -46,6 +46,7 @@ class _MyLandsPagestate extends State<MyLandsPage> {
     ScreenUtil.init(context,
         designSize: Size(750, 1334), allowFontScaling: false);
     return Scaffold(
+        //bottomNavigationBar: BottomNavigationWidget,
         appBar: AppBar(
           title: const Text(
             'My Lands',
@@ -70,7 +71,7 @@ class _MyLandsPagestate extends State<MyLandsPage> {
                       children: [
                         Container(
                           child: Container(
-                            height: h * .6,
+                            height: h * .8,
                             decoration: BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10)),
@@ -78,57 +79,81 @@ class _MyLandsPagestate extends State<MyLandsPage> {
                             child: ListView.builder(
                                 itemCount: state.lands.length,
                                 itemBuilder: (BuildContext context, int index) {
-                                  return Container(
-                                    child: InkWell(
-                                      child: Card(
-                                        child: ListTile(
-                                          title: Text(
-                                              '${state.lands[index].title}'),
-                                          subtitle: Text(
-                                              '${state.lands[index].crop}'),
+                                  return Stack(
+                                    alignment: Alignment.bottomRight,
+                                    children: [
+                                      Container(
+                                        child: InkWell(
+                                          child: Card(
+                                            child: ListTile(
+                                              title: Text(
+                                                  '${state.lands[index].title}'),
+                                              subtitle: Text(
+                                                  '${state.lands[index].crop}'),
+                                            ),
+                                          ),
+                                          onTap: () {
+                                            checkPage = true;
+                                            bloc.add(ViewLandEvent(
+                                                state.lands[index]));
+                                          },
+                                          onLongPress: () {},
                                         ),
                                       ),
-                                      onTap: () {
-                                        checkPage = true;
-                                        bloc.add(
-                                            ViewLandEvent(state.lands[index]));
-                                      },
-                                      onLongPress: () {
-                                        return showDialog<void>(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              title: Text('Alert Dialog !'),
-                                              content: Text(
-                                                  "Are You Sure Want To Delete This Land ?"),
-                                              actions: <Widget>[
-                                                FlatButton(
-                                                  child: Text("YES"),
-                                                  onPressed: () {
-                                                    bloc.add(
-                                                        DeleteLandButtonPressed(
-                                                            state.lands[index]
-                                                                .id));
-                                                    Navigator.of(context).pop();
-                                                    bloc.add(ViewLandsEvent());
-                                                  },
-                                                ),
-                                                FlatButton(
-                                                  child: Text("NO"),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                ),
-                                              ],
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.only(
+                                            bottom: 3.0, end: 3.0),
+                                        child: IconButton(
+                                          icon: Icon(Icons.delete),
+                                          onPressed: () {
+                                            return showDialog<void>(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  title: Text('Alert Dialog !'),
+                                                  content: Text(
+                                                      "Are You Sure Want To Delete This Land ?"),
+                                                  actions: <Widget>[
+                                                    FlatButton(
+                                                      child: Text("YES"),
+                                                      onPressed: () {
+                                                        bloc.add(
+                                                            DeleteLandButtonPressed(
+                                                                state
+                                                                    .lands[
+                                                                        index]
+                                                                    .id));
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                        bloc.add(
+                                                            ViewLandsEvent());
+                                                      },
+                                                    ),
+                                                    FlatButton(
+                                                      child: Text("NO"),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                    ),
+                                                  ],
+                                                );
+                                              },
                                             );
                                           },
-                                        );
-                                      },
-                                    ),
+                                        ),
+                                      )
+                                    ],
                                   );
                                 }),
                           ),
                         ),
+                        // InkWell(
+                        //     child: FloatingActionButton(
+                        //         elevation: 0.0,
+                        //         child: new Icon(Icons.check),
+                        //         backgroundColor: new Color(0xFFE57373),
+                        //         onPressed: () {})),
                         InkWell(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,

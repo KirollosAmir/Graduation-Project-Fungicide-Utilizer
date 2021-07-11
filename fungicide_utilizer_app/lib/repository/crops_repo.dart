@@ -52,4 +52,28 @@ class CropsRepository {
   Future<List<Treatment>> fetchTreatments(Disease disease) async {
     return disease.treatments.toList();
   }
+
+  Future addCropDisease(String cropid, String diseaseid) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String _id = prefs.getString('ID');
+
+    var url = Uri.parse(
+        'https://fungicidesutilizer.000webhostapp.com/APIs/addcropdisease.php?expertid' +
+            _id +
+            '&crop_id=' +
+            cropid +
+            '&disease_id=' +
+            diseaseid);
+
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      if (response.body == "error") {
+        return "Error Adding Disease For This Crop.";
+      } else if (response.body != null) {
+        return "Crop Disease Added Successfully. ";
+      }
+    } else {
+      return "Connection Error.";
+    }
+  }
 }
