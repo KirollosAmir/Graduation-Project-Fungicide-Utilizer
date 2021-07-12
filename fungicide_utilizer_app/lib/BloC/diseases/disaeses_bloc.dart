@@ -39,8 +39,29 @@ class DiseasesBloc extends Bloc<DiseasesEvents, DiseasesStates> {
         yield ErrorState(message: e.toString());
       }
     } else if (event is SaveDiseaseButttonPressed) {
+      yield DiseasesLoadingState();
       var data = await repo.addDisease(
           event.diseasename, event.severity, event.symptoms);
+      if (data == "Error")
+        yield ErrorState(message: "Connection time out. ");
+      else if (data == "Invalid") {
+        yield ErrorState(message: "Invalid Credintials.");
+      } else {
+        yield ErrorState(message: "Land Added Successfully.");
+      }
+    } else if (event is ViewNotFungicide) {
+      yield DiseasesLoadingState();
+      var fungicides = await repo.fetchNotFungicide(event.disease.id);
+      try {
+        yield ViewNotFungicideSuccess(
+            disease: event.disease, fungicides: fungicides);
+      } catch (e) {
+        yield ErrorState(message: e.toString());
+      }
+    } else if (event is AddFungicideDiseaseEvent) {
+      yield DiseasesLoadingState();
+      var data = await repo.addTreatment(
+          event.diseaseid, event.fungicideid, event.dose);
       if (data == "Error")
         yield ErrorState(message: "Connection time out. ");
       else if (data == "Invalid") {

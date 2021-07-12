@@ -76,7 +76,7 @@ class _ExpertLoginScreenState extends State<ExpertLoginScreen> {
     );
     final loginButton = Container(
         height: 50,
-        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+        padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
         child: RaisedButton(
           textColor: Colors.white,
           color: Colors.green,

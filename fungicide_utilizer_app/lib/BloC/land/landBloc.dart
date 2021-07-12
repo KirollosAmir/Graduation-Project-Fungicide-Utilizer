@@ -21,6 +21,7 @@ class LandBloc extends Bloc<LandEvent, LandState> {
       yield LandLoadingState();
       try {
         yield ViewLandSuccessState(land: event.land);
+        yield LandLoadingState();
       } catch (e) {
         yield ErrorState(message: e.toString());
       }
@@ -32,6 +33,7 @@ class LandBloc extends Bloc<LandEvent, LandState> {
         yield ErrorState(message: e.toString());
       }
     } else if (event is SaveLandButttonPressed) {
+      yield LandLoadingState();
       var data = await repo.addLands(
           event.landname, event.crop, event.postalcode, event.stationserial);
       if (data == "Error")
@@ -42,6 +44,7 @@ class LandBloc extends Bloc<LandEvent, LandState> {
         yield AddLandSuccessState(message: "Land Added Successfully.");
       }
     } else if (event is DeleteLandButtonPressed) {
+      yield LandLoadingState();
       var data = await repo.deleteLand(event.landid);
       if (data == "Error")
         yield ConnectionErrorState(message: "Connection time out. ");

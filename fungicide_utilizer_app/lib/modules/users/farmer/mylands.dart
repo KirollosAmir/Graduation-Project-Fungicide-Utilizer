@@ -97,7 +97,6 @@ class _MyLandsPagestate extends State<MyLandsPage> {
                                             bloc.add(ViewLandEvent(
                                                 state.lands[index]));
                                           },
-                                          onLongPress: () {},
                                         ),
                                       ),
                                       Padding(
@@ -110,7 +109,7 @@ class _MyLandsPagestate extends State<MyLandsPage> {
                                               context: context,
                                               builder: (BuildContext context) {
                                                 return AlertDialog(
-                                                  title: Text('Alert Dialog !'),
+                                                  title: Text('Delete Land ?'),
                                                   content: Text(
                                                       "Are You Sure Want To Delete This Land ?"),
                                                   actions: <Widget>[
@@ -673,12 +672,79 @@ class _MyLandsPagestate extends State<MyLandsPage> {
                                                         ]),
                                             ),
                                             Container(
+                                              height: h * .8,
                                               child: Column(children: [
                                                 Text('Display History',
                                                     style: TextStyle(
                                                         fontSize: 22,
                                                         fontWeight:
                                                             FontWeight.bold)),
+                                                Stack(
+                                                  children: [
+                                                    Padding(
+                                                      padding: EdgeInsets.only(
+                                                          top: h * .02),
+                                                      child: Container(
+                                                        height: h * .9,
+                                                        child: ListView.builder(
+                                                            itemCount: state
+                                                                .land
+                                                                .history
+                                                                .length,
+                                                            itemBuilder:
+                                                                (BuildContext
+                                                                        context,
+                                                                    int index) {
+                                                              return Padding(
+                                                                  padding: EdgeInsets.only(
+                                                                      bottom: h *
+                                                                          0.0001,
+                                                                      left: w *
+                                                                          .01,
+                                                                      right: w *
+                                                                          .01),
+                                                                  child: Card(
+                                                                    child:
+                                                                        Container(
+                                                                      height: h *
+                                                                          0.1,
+                                                                      width: w *
+                                                                          0.914,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color: Colors
+                                                                            .blueGrey,
+                                                                        borderRadius:
+                                                                            BorderRadius.all(Radius.circular(12)),
+                                                                      ),
+                                                                      child:
+                                                                          GestureDetector(
+                                                                        onTap:
+                                                                            () {},
+                                                                        child:
+                                                                            Center(
+                                                                          child:
+                                                                              ListTile(
+                                                                            subtitle:
+                                                                                Text(
+                                                                              "'${state.land.history[index].id}'",
+                                                                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                                                            ),
+                                                                            title:
+                                                                                Text(
+                                                                              "'${state.land.history[index].entryDate}'",
+                                                                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ));
+                                                            }),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
                                               ]),
                                             ),
                                           ]))

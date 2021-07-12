@@ -197,6 +197,15 @@ class _FungicidesState extends State<Fungicides> {
                                         child: ListTile(
                                           title: Text(
                                               '${state.treatments[index].name}'),
+                                          trailing: Wrap(
+                                            spacing:
+                                                12, // space between two icons
+                                            children: <Widget>[
+                                              Icon(Icons
+                                                  .arrow_forward_ios), // icon-1
+                                              //Icon(Icons.message), // icon-2
+                                            ],
+                                          ),
                                           // subtitle: Text(
                                           //     '${state.treatments[index].id}'),
                                         ),

@@ -16,6 +16,7 @@ class _DiseasesState extends State<Diseases> {
   TextEditingController diseasename = TextEditingController();
   TextEditingController severity = TextEditingController();
   TextEditingController symptoms = TextEditingController();
+  TextEditingController dose = TextEditingController();
   PageController controller = PageController();
   // ignore: unused_field
   int _curr = 0;
@@ -213,6 +214,15 @@ class _DiseasesState extends State<Diseases> {
                                               '${state.diseases[index].name}'),
                                           subtitle: Text(
                                               '${state.diseases[index].id}'),
+                                          trailing: Wrap(
+                                            spacing:
+                                                12, // space between two icons
+                                            children: <Widget>[
+                                              Icon(Icons
+                                                  .arrow_forward_ios), // icon-1
+                                              //Icon(Icons.message), // icon-2
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       onTap: () {
@@ -277,7 +287,7 @@ class _DiseasesState extends State<Diseases> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
                             DefaultTabController(
-                                length: 3, // length of tabs
+                                length: 2, // length of tabs
                                 initialIndex: 0,
                                 child: Column(
                                     crossAxisAlignment:
@@ -290,7 +300,7 @@ class _DiseasesState extends State<Diseases> {
                                           tabs: [
                                             Tab(text: 'Info'),
                                             Tab(text: 'Treatments'),
-                                            Tab(text: 'Add Treatment'),
+                                            // Tab(text: 'Add Treatment'),
                                           ],
                                         ),
                                       ),
@@ -381,7 +391,7 @@ class _DiseasesState extends State<Diseases> {
                                                                     child:
                                                                         Container(
                                                                       height:
-                                                                          h * .6,
+                                                                          h * .5,
                                                                       decoration:
                                                                           BoxDecoration(
                                                                         borderRadius:
@@ -406,25 +416,152 @@ class _DiseasesState extends State<Diseases> {
                                                                           }),
                                                                     ),
                                                                   ),
+                                                                  InkWell(
+                                                                    child: Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        Text(
+                                                                          'Add Treatment',
+                                                                          style:
+                                                                              TextStyle(fontSize: 40),
+                                                                        ),
+                                                                        Padding(
+                                                                            padding:
+                                                                                EdgeInsets.only(left: w * .01),
+                                                                            child: InkWell(
+                                                                              child: Icon(
+                                                                                Icons.add_circle,
+                                                                                size: 30,
+                                                                                color: Colors.green,
+                                                                              ),
+                                                                              onTap: () {},
+                                                                            ))
+                                                                      ],
+                                                                    ),
+                                                                    onTap: () {
+                                                                      bloc.add(
+                                                                          ViewNotFungicide(
+                                                                              state.disease));
+                                                                    },
+                                                                  ),
                                                                 ],
                                                               )
                                                             ],
                                                           ),
                                                         ]),
                                             ),
-                                            Container(
-                                              child: Column(children: [
-                                                // Text('Display History',
-                                                //     style: TextStyle(
-                                                //         fontSize: 22,
-                                                //         fontWeight:
-                                                //             FontWeight.bold)),
-                                              ]),
-                                            ),
                                           ]))
                                     ])),
                           ]),
                     ),
+                  ],
+                );
+              } else if (state is ViewNotFungicideSuccess) {
+                return Stack(
+                  children: [
+                    Column(
+                      children: [
+                        Container(
+                          child: Container(
+                            height: h * .6,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                            ),
+                            child: ListView.builder(
+                                itemCount: state.fungicides.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Stack(
+                                    alignment: Alignment.bottomRight,
+                                    children: [
+                                      Container(
+                                        child: InkWell(
+                                          child: Card(
+                                            child: ListTile(
+                                              title: Text(
+                                                  '${state.fungicides[index].name}'),
+                                              subtitle: Text(
+                                                  '${state.fungicides[index].id}'),
+                                              // subtitle: Text(
+                                              //     '${state.treatments[index].id}'),
+                                            ),
+                                          ),
+                                          onTap: () {
+                                            // checkPage = true;
+                                            // bloc.add(ViewCropEvent());
+                                            // bloc.add(ViewFungicideEvent(
+                                            //     state.treatments[index]));
+                                          },
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.only(
+                                            bottom: 3.0, end: 3.0),
+                                        child: IconButton(
+                                            icon: Icon(Icons.add),
+                                            onPressed: () {
+                                              return showDialog<void>(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    title: Text(
+                                                        'Add This Treatment For Disease'),
+                                                    content: TextField(
+                                                      controller: dose,
+                                                      decoration: InputDecoration(
+                                                          hintText:
+                                                              "Please enter fungicide dose"),
+                                                    ),
+                                                    actions: <Widget>[
+                                                      FlatButton(
+                                                        child: Text("Save"),
+                                                        onPressed: () {
+                                                          bloc.add(
+                                                              AddFungicideDiseaseEvent(
+                                                                  state.disease
+                                                                      .id,
+                                                                  state
+                                                                      .fungicides[
+                                                                          index]
+                                                                      .id,
+                                                                  dose.text));
+                                                          bloc.add(
+                                                              ViewDiseasesEvent());
+                                                          // bloc.add(
+                                                          //     DeleteLandButtonPressed(
+                                                          //         state
+                                                          //             .lands[
+                                                          //                 index]
+                                                          //             .id));
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                          // bloc.add(
+                                                          //     ViewLandsEvent());
+                                                        },
+                                                      ),
+                                                      FlatButton(
+                                                        child: Text("Cancel"),
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                            }),
+                                      )
+                                    ],
+                                  );
+                                }),
+                          ),
+                        ),
+                      ],
+                    )
                   ],
                 );
               }

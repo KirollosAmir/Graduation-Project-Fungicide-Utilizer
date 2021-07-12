@@ -40,3 +40,19 @@ class SaveDiseaseButttonPressed extends DiseasesEvents {
 }
 
 class ViewFungicidesEvent extends DiseasesEvents {}
+
+class ViewNotFungicide extends DiseasesEvents {
+  final Disease disease;
+
+  ViewNotFungicide(this.disease);
+}
+
+// ignore: must_be_immutable
+class AddFungicideDiseaseEvent extends DiseasesEvents {
+  //final Disease disease;
+  // String cropid;
+  String dose;
+  String diseaseid;
+  String fungicideid;
+  AddFungicideDiseaseEvent(this.diseaseid, this.fungicideid, this.dose);
+}

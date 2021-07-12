@@ -31,6 +31,7 @@ import 'modules/users/Expert/diseases.dart';
 import 'modules/users/Expert/fungicides.dart';
 import 'modules/users/farmer/allcrops.dart';
 import 'modules/users/farmer/cropchecker.dart';
+import 'modules/users/farmer/fungicideCalculator.dart';
 import 'modules/users/farmer/mylands.dart';
 import 'modules/users/farmer/news.dart';
 import 'modules/users/farmer/notifications.dart';
@@ -144,6 +145,7 @@ class _MyAppState extends State<MyApp> {
               '/FarmerNotifications': (context) => Notifcations(),
               '/AllCrops': (context) => CropsPage(),
               '/FarmerCropChecker': (context) => CropChecker(),
+              '/FungicideCalculator': (context) => FungicideCalculator(),
               '/FarmerHome': (context) => FarmerHome(),
               '/ExpertHome': (context) => ExpertHome(),
               '/Crops': (context) => Crops(),

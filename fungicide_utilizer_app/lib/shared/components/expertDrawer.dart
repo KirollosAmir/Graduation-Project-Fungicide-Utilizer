@@ -109,6 +109,7 @@ Widget ExpertDrawer(context) {
             // Navigator.of(context).pushReplacement(MaterialPageRoute(
             //     builder: (BuildContext context) => WelcomePage()));
             print("you loged out $prefs");
+            CircularProgressIndicator();
           },
         ),
       ),

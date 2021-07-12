@@ -85,6 +85,15 @@ class _CropsPagestate extends State<CropsPage> {
                                               '${state.crops[index].name}'),
                                           subtitle:
                                               Text('${state.crops[index].id}'),
+                                          trailing: Wrap(
+                                            spacing:
+                                                12, // space between two icons
+                                            children: <Widget>[
+                                              Icon(Icons
+                                                  .arrow_forward_ios), // icon-1
+                                              //Icon(Icons.message), // icon-2
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       onTap: () {
@@ -125,6 +134,15 @@ class _CropsPagestate extends State<CropsPage> {
                                               '${state.crop.diseases[index].name}'),
                                           subtitle: Text(
                                               '${state.crop.diseases[index].id}'),
+                                          trailing: Wrap(
+                                            spacing:
+                                                12, // space between two icons
+                                            children: <Widget>[
+                                              Icon(Icons
+                                                  .arrow_forward_ios), // icon-1
+                                              //Icon(Icons.message), // icon-2
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       onTap: () {

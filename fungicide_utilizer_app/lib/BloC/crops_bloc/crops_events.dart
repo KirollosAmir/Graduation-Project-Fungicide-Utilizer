@@ -48,3 +48,18 @@ class SaveCropButttonPressed extends CropsEvents {
 
   SaveCropButttonPressed({this.cropname, this.duration});
 }
+
+class ViewNotCropDisease extends CropsEvents {
+  final Crop crop;
+
+  ViewNotCropDisease(this.crop);
+}
+
+// ignore: must_be_immutable
+class AddCropDiseaseEvent extends CropsEvents {
+  //final Disease disease;
+  // String cropid;
+  String cropid;
+  String diseaseid;
+  AddCropDiseaseEvent(this.diseaseid, this.cropid);
+}

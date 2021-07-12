@@ -1,5 +1,6 @@
 import 'package:fungicide_utilizer_app/DataLayer/crop.dart';
 import 'package:fungicide_utilizer_app/DataLayer/disease.dart';
+import 'package:fungicide_utilizer_app/DataLayer/diseaseInfo.dart';
 import 'package:fungicide_utilizer_app/DataLayer/treatment.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -53,12 +54,12 @@ class CropsRepository {
     return disease.treatments.toList();
   }
 
-  Future addCropDisease(String cropid, String diseaseid) async {
+  Future addCropDisease(String diseaseid, String cropid) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String _id = prefs.getString('ID');
 
     var url = Uri.parse(
-        'https://fungicidesutilizer.000webhostapp.com/APIs/addcropdisease.php?expertid' +
+        'https://fungicidesutilizer.000webhostapp.com/APIs/addcropdisease.php?expertid=' +
             _id +
             '&crop_id=' +
             cropid +
@@ -69,11 +70,27 @@ class CropsRepository {
     if (response.statusCode == 200) {
       if (response.body == "error") {
         return "Error Adding Disease For This Crop.";
-      } else if (response.body != null) {
+      } else if (response.body == "success") {
+        print("Crop Disease Added Successfully.");
         return "Crop Disease Added Successfully. ";
       }
     } else {
       return "Connection Error.";
+    }
+  }
+
+  // ignore: missing_return
+  Future<List<DiseaseInfo>> fetchNotCropDisease(String id) async {
+    List<DiseaseInfo> dis = [];
+    var url = Uri.parse(
+        'https://fungicidesutilizer.000webhostapp.com/APIs/getdiseaseoptions.php?id=' +
+            id);
+    var response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      data.map((crop) => dis.add(DiseaseInfo.fromJson(crop))).toList();
+      return dis;
     }
   }
 }

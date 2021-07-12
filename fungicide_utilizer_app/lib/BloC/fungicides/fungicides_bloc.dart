@@ -32,7 +32,7 @@ class FungicidesBloc extends Bloc<FungicidesEvents, FungicidesStates> {
       else if (data == "Invalid") {
         yield ErrorState(message: "Invalid Credintials.");
       } else {
-        yield ErrorState(message: "Land Added Successfully.");
+        yield ErrorState(message: "Fungicide Added Successfully.");
       }
     }
   }

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:fungicide_utilizer_app/DataLayer/diseaseInfo.dart';
 import '../../DataLayer/crop.dart';
 import '../../DataLayer/disease.dart';
 import '../../DataLayer/treatment.dart';
@@ -52,4 +53,16 @@ class AddingCropState extends CropsStates {}
 class AddCropSuccessState extends CropsStates {
   final String message;
   AddCropSuccessState({this.message});
+}
+
+class ViewNotCropDiseaseSuccess extends CropsStates {
+  final Crop crop;
+
+  final List<DiseaseInfo> diseases;
+  ViewNotCropDiseaseSuccess({this.crop, this.diseases});
+}
+
+class AddCropDiseaseSuccessState extends CropsStates {
+  final String message;
+  AddCropDiseaseSuccessState({this.message});
 }

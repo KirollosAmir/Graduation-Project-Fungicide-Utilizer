@@ -53,6 +53,7 @@ class CropsBloc extends Bloc<CropsEvents, CropsStates> {
         yield ErrorState(message: e.toString());
       }
     } else if (event is SaveCropButttonPressed) {
+      yield LoadingState();
       var data = await repo.addCrop(event.cropname, event.duration);
       if (data == "Error")
         yield ErrorState(message: "Connection time out. ");
@@ -60,6 +61,24 @@ class CropsBloc extends Bloc<CropsEvents, CropsStates> {
         yield ErrorState(message: "Invalid Credintials.");
       } else {
         yield ErrorState(message: "Land Added Successfully.");
+      }
+    } else if (event is ViewNotCropDisease) {
+      yield LoadingState();
+      var diseases = await repo.fetchNotCropDisease(event.crop.id);
+      try {
+        yield ViewNotCropDiseaseSuccess(crop: event.crop, diseases: diseases);
+      } catch (e) {
+        yield ErrorState(message: e.toString());
+      }
+    } else if (event is AddCropDiseaseEvent) {
+      yield LoadingState();
+      var data = await repo.addCropDisease(event.diseaseid, event.cropid);
+      if (data == "Error")
+        yield ErrorState(message: "Connection time out. ");
+      else if (data == "Invalid") {
+        yield ErrorState(message: "Invalid Credintials.");
+      } else {
+        yield ErrorState(message: "Crop Disease Added Successfully.");
       }
     }
   }

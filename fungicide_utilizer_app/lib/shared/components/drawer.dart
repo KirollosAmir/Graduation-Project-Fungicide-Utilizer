@@ -39,7 +39,7 @@ Widget FarmerDrawer(context) {
           title: Text('Notifications'),
           trailing: Icon(Icons.notifications),
           onTap: () {
-            Navigator.pushReplacementNamed(context, '/FarmerNotifications');
+            Navigator.pushNamed(context, '/FarmerNotifications');
             // Navigator.of(context).pushReplacement(MaterialPageRoute(
             //     builder: (BuildContext context) => Notifcations()));
           },
@@ -82,17 +82,17 @@ Widget FarmerDrawer(context) {
         ),
       ),
 
-      //Profile
-      // Card(
-      //   child: ListTile(
-      //     title: Text('Profile Page'),
-      //     trailing: Icon(Icons.person),
-      //     onTap: () {
-      //       // Navigator.of(context).push(MaterialPageRoute(
-      //       //     builder: (BuildContext context) => Profile()));
-      //     },
-      //   ),
-      // ),
+      Card(
+        child: ListTile(
+          title: Text('Fungicide Calculator'),
+          trailing: Icon(Icons.calculate),
+          onTap: () {
+            Navigator.pushNamed(context, '/FungicideCalculator');
+            // Navigator.of(context).push(MaterialPageRoute(
+            //     builder: (BuildContext context) => Profile()));
+          },
+        ),
+      ),
 
       Card(
         child: ListTile(

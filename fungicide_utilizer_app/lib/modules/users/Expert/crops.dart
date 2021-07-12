@@ -40,6 +40,104 @@ class _CropsState extends State<Crops> {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
+    // addDosease() async {
+    //   return showDialog<void>(
+    //     context: context,
+    //     barrierDismissible: false, // user must tap button!
+    //     builder: (BuildContext context) {
+    //       ScreenUtil.init(context,
+    //           designSize: Size(750, 1334), allowFontScaling: false);
+    //       return AlertDialog(
+    //         content: SingleChildScrollView(
+    //             child: Column(
+    //           children: [
+    //             Padding(
+    //               padding: EdgeInsets.only(top: h * .01),
+    //               child: TextFormField(
+    //                 //  controller: landname,
+    //                 decoration: const InputDecoration(
+    //                   hintText: 'Land Name.',
+    //                 ),
+    //                 validator: (value) {
+    //                   if (value.isEmpty) {
+    //                     return 'Please enter land name';
+    //                   }
+    //                   return null;
+    //                 },
+    //               ),
+    //             ),
+    //             Padding(
+    //               padding: EdgeInsets.only(top: h * .01),
+    //               child: TextFormField(
+    //                 controller: cropname,
+    //                 decoration: const InputDecoration(
+    //                   hintText: 'Crop Name.',
+    //                 ),
+    //                 validator: (value) {
+    //                   if (value.isEmpty) {
+    //                     return 'Please enter a crop name.';
+    //                   }
+    //                   return null;
+    //                 },
+    //               ),
+    //             ),
+    //             Padding(
+    //                 padding: EdgeInsets.only(top: h * .05),
+    //                 child: Row(
+    //                   children: [
+    //                     Container(
+    //                       width: w * .3,
+    //                       height: h * .08,
+    //                       alignment: Alignment.center,
+    //                       decoration: BoxDecoration(
+    //                         color: Colors.green,
+    //                         borderRadius: BorderRadius.all(Radius.circular(10)),
+    //                       ),
+    //                       child: InkWell(
+    //                         child: Text('Save',
+    //                             style: TextStyle(color: Colors.white)),
+    //                         onTap: () {
+    //                           setState(() {
+    //                             Navigator.pop(context);
+
+    //                             // bloc.add(ResetEvent());
+    //                           });
+    //                         },
+    //                       ),
+    //                     ),
+    //                     Padding(
+    //                       padding: EdgeInsets.only(left: w * .02),
+    //                       child: Container(
+    //                         alignment: Alignment.center,
+    //                         decoration: BoxDecoration(
+    //                           color: Colors.red,
+    //                           borderRadius:
+    //                               BorderRadius.all(Radius.circular(10)),
+    //                         ),
+    //                         child: InkWell(
+    //                           child: Text(
+    //                             'Cancel',
+    //                             style: TextStyle(color: Colors.white),
+    //                           ),
+    //                           onTap: () {
+    //                             setState(() {
+    //                               Navigator.pop(context);
+
+    //                               // bloc.add(
+    //                               //     ResetEvent());
+    //                             });
+    //                           },
+    //                         ),
+    //                       ),
+    //                     )
+    //                   ],
+    //                 )),
+    //           ],
+    //         )),
+    //       );
+    //     },
+    //   );
+    // }
 
     ScreenUtil.init(context,
         designSize: Size(750, 1334), allowFontScaling: false);
@@ -74,7 +172,7 @@ class _CropsState extends State<Crops> {
                               ),
                               validator: (value) {
                                 if (value.isEmpty) {
-                                  return 'Please enter land name';
+                                  return 'Please enter crop name';
                                 }
                                 return null;
                               },
@@ -200,6 +298,17 @@ class _CropsState extends State<Crops> {
                                                   '${state.crops[index].name}'),
                                               subtitle: Text(
                                                   '${state.crops[index].id}'),
+                                              // leading: const Icon(
+                                              //     Icons.),
+                                              trailing: Wrap(
+                                                spacing:
+                                                    12, // space between two icons
+                                                children: <Widget>[
+                                                  Icon(Icons
+                                                      .arrow_forward_ios), // icon-1
+                                                  //Icon(Icons.message), // icon-2
+                                                ],
+                                              ),
                                             ),
                                           ),
                                           onTap: () {
@@ -230,45 +339,225 @@ class _CropsState extends State<Crops> {
               } else if (state is ViewCropSuccess) {
                 return Stack(
                   children: [
-                    Column(
-                      children: [
-                        Container(
-                          child: Container(
-                            height: h * .6,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                            ),
-                            child: ListView.builder(
-                                itemCount: state.crop.diseases.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Container(
-                                    child: InkWell(
-                                      child: Card(
-                                        child: ListTile(
-                                          title: Text(
-                                              '${state.crop.diseases[index].name}'),
-                                          subtitle: Text(
-                                              '${state.crop.diseases[index].id}'),
+                    Container(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            DefaultTabController(
+                                length: 2, // length of tabs
+                                initialIndex: 0,
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: <Widget>[
+                                      Container(
+                                        child: TabBar(
+                                          labelColor: Colors.green,
+                                          unselectedLabelColor: Colors.black,
+                                          tabs: [
+                                            Tab(text: 'Info'),
+                                            Tab(text: 'Diseases'),
+                                            // Tab(text: 'Add Disease'),
+                                          ],
                                         ),
                                       ),
-                                      onTap: () {
-                                        checkPage = true;
-                                        // bloc.add(ViewCropEvent());
-                                        // bloc.add(
-                                        //     ViewCropEvent(state.crops[index]));
-                                        bloc.add(ViewDiseaseEvent(
-                                            state.crop.diseases[index]));
-                                      },
-                                    ),
-                                  );
-                                }),
-                          ),
-                        ),
-                      ],
-                    )
+                                      Container(
+                                          height: 600, //height of TabBarView
+                                          decoration: BoxDecoration(
+                                              border: Border(
+                                                  top: BorderSide(
+                                                      color: Colors.grey,
+                                                      width: 0.5))),
+                                          child: TabBarView(children: <Widget>[
+                                            Container(
+                                                // child: state.crop
+                                                //             .length ==
+                                                //         0
+                                                //     ? Center(
+                                                //         child: Text(
+                                                //             'No data available',
+                                                //             style: TextStyle(
+                                                //                 fontSize: 22,
+                                                //                 fontWeight:
+                                                //                     FontWeight
+                                                //                         .bold)),
+                                                //       )
+                                                //     :
+                                                child: Center(
+                                                    child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                  Text(
+                                                      'Name: ' +
+                                                          state.crop.name,
+                                                      style: TextStyle(
+                                                          fontSize: 22,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                  Text(
+                                                      'Planting Duration: ' +
+                                                          state.crop.duration,
+                                                      style: TextStyle(
+                                                          fontSize: 22,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                  // Text(
+                                                  //     'Symptoms: ' +
+                                                  //         state
+                                                  //             .disease.symptoms,
+                                                  //     style: TextStyle(
+                                                  //         fontSize: 22,
+                                                  //         fontWeight:
+                                                  //             FontWeight.bold)),
+                                                ]))),
+                                            Container(
+                                              child:
+                                                  state.crop.diseases.length ==
+                                                          0
+                                                      ? Center(
+                                                          child: Text(
+                                                              'No data available',
+                                                              style: TextStyle(
+                                                                  fontSize: 22,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold)),
+                                                        )
+                                                      : Column(children: [
+                                                          Stack(
+                                                            children: [
+                                                              Column(
+                                                                children: [
+                                                                  Container(
+                                                                    child:
+                                                                        Container(
+                                                                      height:
+                                                                          h * .5,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.all(Radius.circular(10)),
+                                                                      ),
+                                                                      child: ListView.builder(
+                                                                          itemCount: state.crop.diseases.length,
+                                                                          itemBuilder: (BuildContext context, int index) {
+                                                                            return Container(
+                                                                              child: Column(
+                                                                                children: [
+                                                                                  InkWell(
+                                                                                    child: Card(
+                                                                                      child: ListTile(
+                                                                                        title: Text('${state.crop.diseases[index].name}'),
+                                                                                        subtitle: Text('${state.crop.diseases[index].id}'),
+                                                                                      ),
+                                                                                    ),
+                                                                                    onTap: () {
+                                                                                      checkPage = true;
+                                                                                    },
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            );
+                                                                          }),
+                                                                    ),
+                                                                  ),
+                                                                  InkWell(
+                                                                    child: Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        Text(
+                                                                          'Add Disease',
+                                                                          style:
+                                                                              TextStyle(fontSize: 40),
+                                                                        ),
+                                                                        Padding(
+                                                                            padding:
+                                                                                EdgeInsets.only(left: w * .01),
+                                                                            child: InkWell(
+                                                                              child: Icon(
+                                                                                Icons.add_circle,
+                                                                                size: 30,
+                                                                                color: Colors.green,
+                                                                              ),
+                                                                              onTap: () {},
+                                                                            ))
+                                                                      ],
+                                                                    ),
+                                                                    onTap: () {
+                                                                      bloc.add(
+                                                                          ViewNotCropDisease(
+                                                                              state.crop));
+                                                                    },
+                                                                  ),
+                                                                ],
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ]),
+                                            ),
+                                            // Container(
+                                            //   child: Column(children: [
+                                            //     // Text('Display History',
+                                            //     //     style: TextStyle(
+                                            //     //         fontSize: 22,
+                                            //     //         fontWeight:
+                                            //     //             FontWeight.bold)),
+                                            //   ]),
+                                            // ),
+                                          ]))
+                                    ])),
+                          ]),
+                    ),
                   ],
                 );
+                // return Stack(
+                //   children: [
+                //     Column(
+                //       children: [
+                //         Container(
+                //           child: Container(
+                //             height: h * .6,
+                //             decoration: BoxDecoration(
+                //               borderRadius:
+                //                   BorderRadius.all(Radius.circular(10)),
+                //             ),
+                //             child: ListView.builder(
+                //                 itemCount: state.crop.diseases.length,
+                //                 itemBuilder: (BuildContext context, int index) {
+                //                   return Container(
+                //                     child: InkWell(
+                //                       child: Card(
+                //                         child: ListTile(
+                //                           title: Text(
+                //                               '${state.crop.diseases[index].name}'),
+                //                           subtitle: Text(
+                //                               '${state.crop.diseases[index].id}'),
+                //                         ),
+                //                       ),
+                //                       onTap: () {
+                //                         checkPage = true;
+                //                         // bloc.add(ViewCropEvent());
+                //                         // bloc.add(
+                //                         //     ViewCropEvent(state.crops[index]));
+                //                         bloc.add(ViewDiseaseEvent(
+                //                             state.crop.diseases[index]));
+                //                       },
+                //                     ),
+                //                   );
+                //                 }),
+                //           ),
+                //         ),
+                //       ],
+                //     )
+                //   ],
+                // );
               } else if (state is ViewDiseaseSuccess) {
                 return Stack(
                   children: [
@@ -303,6 +592,107 @@ class _CropsState extends State<Crops> {
                                         //     state.crop.diseases[index]));
                                       },
                                     ),
+                                  );
+                                }),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                );
+              } else if (state is ViewNotCropDiseaseSuccess) {
+                return Stack(
+                  children: [
+                    Column(
+                      children: [
+                        Container(
+                          child: Container(
+                            height: h * .6,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                            ),
+                            child: ListView.builder(
+                                itemCount: state.diseases.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Stack(
+                                    alignment: Alignment.bottomRight,
+                                    children: [
+                                      Container(
+                                        child: InkWell(
+                                          child: Card(
+                                            child: ListTile(
+                                              title: Text(
+                                                  '${state.diseases[index].name}'),
+                                              subtitle: Text(
+                                                  '${state.diseases[index].id}'),
+                                              // subtitle: Text(
+                                              //     '${state.treatments[index].id}'),
+                                            ),
+                                          ),
+                                          onTap: () {
+                                            // checkPage = true;
+                                            // bloc.add(ViewCropEvent());
+                                            // bloc.add(ViewFungicideEvent(
+                                            //     state.treatments[index]));
+                                          },
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.only(
+                                            bottom: 3.0, end: 3.0),
+                                        child: IconButton(
+                                            icon: Icon(Icons.add),
+                                            onPressed: () {
+                                              return showDialog<void>(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    title:
+                                                        Text('Add Disease ?'),
+                                                    content: Text(
+                                                        "You Are About To Add This Disease For This Crop ?"),
+                                                    actions: <Widget>[
+                                                      FlatButton(
+                                                        child: Text("YES"),
+                                                        onPressed: () {
+                                                          bloc.add(
+                                                              AddCropDiseaseEvent(
+                                                                  state
+                                                                      .diseases[
+                                                                          index]
+                                                                      .id,
+                                                                  state.crop
+                                                                      .id));
+                                                          bloc.add(
+                                                              ViewCropsEvent());
+                                                          // bloc.add(
+                                                          //     DeleteLandButtonPressed(
+                                                          //         state
+                                                          //             .lands[
+                                                          //                 index]
+                                                          //             .id));
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                          // bloc.add(
+                                                          //     ViewLandsEvent());
+                                                        },
+                                                      ),
+                                                      FlatButton(
+                                                        child: Text("NO"),
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                            }),
+                                      )
+                                    ],
                                   );
                                 }),
                           ),

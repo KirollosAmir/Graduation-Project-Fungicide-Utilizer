@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:fungicide_utilizer_app/DataLayer/disease.dart';
+import 'package:fungicide_utilizer_app/DataLayer/fungicideInfo.dart';
 import 'package:fungicide_utilizer_app/DataLayer/treatment.dart';
 
 class DiseasesStates extends Equatable {
@@ -46,4 +47,16 @@ class AddDiseaseSuccessState extends DiseasesStates {
 class ViewFungicidesSuccess extends DiseasesStates {
   final List<Treatment> treatments;
   ViewFungicidesSuccess({this.treatments});
+}
+
+class ViewNotFungicideSuccess extends DiseasesStates {
+  final Disease disease;
+
+  final List<FungicideInfo> fungicides;
+  ViewNotFungicideSuccess({this.disease, this.fungicides});
+}
+
+class AddFungicideDiseaseSuccessState extends DiseasesStates {
+  final String message;
+  AddFungicideDiseaseSuccessState({this.message});
 }
