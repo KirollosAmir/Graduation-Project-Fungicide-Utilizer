@@ -21,7 +21,6 @@ class LandBloc extends Bloc<LandEvent, LandState> {
       yield LandLoadingState();
       try {
         yield ViewLandSuccessState(land: event.land);
-        yield LandLoadingState();
       } catch (e) {
         yield ErrorState(message: e.toString());
       }
