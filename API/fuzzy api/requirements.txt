@@ -1,0 +1,17 @@
+pip~=21.1.2
+wheel~=0.36.2
+cryptography~=2.9.2
+py~=1.9.0
+lxml~=4.5.2
+keyring~=21.2.1
+gunicorn~=20.1.0
+gevent~=20.6.2
+tornado~=6.0.4
+greenlet~=0.4.17
+setuptools~=57.0.0
+Cython~=0.29.23
+mysql~=0.0.3
+numpy~=1.19.5
+scikit-fuzzy~=0.4.2
+matplotlib~=3.3.4
+Flask~=2.0.1
