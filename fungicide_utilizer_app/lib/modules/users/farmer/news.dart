@@ -96,6 +96,24 @@ class _FarmerHomestate extends State<FarmerHome> {
         builder: (context, state) {
           if (state is NewsInitialState) {
             return Center(child: CircularProgressIndicator());
+          } else if (state is ConnectionErrorState) {
+            return Stack(
+              children: [
+                Text(
+                    'Connection lost! Please reconnect to internet and refresh',
+                    style:
+                        TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {});
+                      },
+                      child: Text('Refresh',
+                          style: TextStyle(color: Colors.white)),
+                    ))
+              ],
+            );
           } else if (state is NewsLoadingState) {
             return Center(child: CircularProgressIndicator());
           } else if (state is NewsSuccessState) {
@@ -187,8 +205,6 @@ class _FarmerHomestate extends State<FarmerHome> {
             //     )
             //   ],
             // );
-          } else if (state is NewsErrorState) {
-            return Text(state.message);
           }
           // ignore: unused_label
           child:

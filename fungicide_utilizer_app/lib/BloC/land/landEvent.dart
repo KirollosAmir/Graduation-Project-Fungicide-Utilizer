@@ -41,4 +41,11 @@ class DeleteLandButtonPressed extends LandEvent {
   DeleteLandButtonPressed(this.landid);
 }
 
+// ignore: must_be_immutable
+class AddObservationEvent extends LandEvent {
+  String landid;
+  // String crop;
+  String observation;
+  AddObservationEvent({this.landid, this.observation});
+}
 // class NotificationSeen extends LandEvent {}

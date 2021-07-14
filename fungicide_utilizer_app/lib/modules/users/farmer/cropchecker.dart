@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:fungicide_utilizer_app/shared/components/drawer.dart';
+//import 'package:fungicide_utilizer_app/shared/components/drawer.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
 class CropChecker extends StatefulWidget {
-  const CropChecker() : super();
+  CropChecker() : super();
+
+  final String title = "Crop Checker";
 
   @override
   _CropCheckerState createState() => _CropCheckerState();
@@ -15,17 +17,19 @@ class CropChecker extends StatefulWidget {
 class _CropCheckerState extends State<CropChecker> {
   String dropdownvalue = 'apple';
   var items = ['apple', 'tomato', 'potato', 'corn'];
-  static final String uploadEndPoint =
-      'https://fungicideutilizer.herokuapp.com/checker';
+  var uploadEndPoint =
+      Uri.parse("https://fungicideutilizer.herokuapp.com/checker");
   Future<File> file;
   String status = '';
   String base64Image;
   File tmpFile;
   String errMessage = 'Error Uploading Image';
 
-  chooseImage() {
+  chooseImage() async {
+    final _picker = ImagePicker();
+    PickedFile pickedFile = await _picker.getImage(source: ImageSource.gallery);
     setState(() {
-      file = ImagePicker.pickImage(source: ImageSource.gallery);
+      file = Future.value(File(pickedFile.path));
     });
     setStatus('');
   }
@@ -92,7 +96,6 @@ class _CropCheckerState extends State<CropChecker> {
       appBar: AppBar(
         title: Text("Crop Checker"),
       ),
-      drawer: FarmerDrawer(context),
       body: Container(
         padding: EdgeInsets.all(30.0),
         child: Column(

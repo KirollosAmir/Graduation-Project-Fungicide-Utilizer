@@ -26,3 +26,8 @@ class ViewNewSuccessState extends NewsState {
   final News news;
   ViewNewSuccessState({this.news});
 }
+
+class ConnectionErrorState extends NewsState {
+  final String message;
+  ConnectionErrorState({this.message});
+}

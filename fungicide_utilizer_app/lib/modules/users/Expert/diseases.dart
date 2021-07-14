@@ -191,6 +191,24 @@ class _DiseasesState extends State<Diseases> {
                 return CircularProgressIndicator();
               } else if (state is DiseasesLoadingState) {
                 return CircularProgressIndicator();
+              } else if (state is ErrorState) {
+                return Stack(
+                  children: [
+                    Text(
+                        'Connection lost! Please reconnect to internet and refresh',
+                        style: TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.bold)),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {});
+                          },
+                          child: Text('Refresh',
+                              style: TextStyle(color: Colors.white)),
+                        ))
+                  ],
+                );
               } else if (state is ViewDiseasesSuccess) {
                 return Stack(
                   children: [

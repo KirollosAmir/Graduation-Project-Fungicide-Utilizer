@@ -69,4 +69,27 @@ class MyLandsRepos {
       return "Connection Error.";
     }
   }
+
+  Future addObservation(
+    String landid,
+    //String crop,
+    String observation,
+  ) async {
+    var url = Uri.parse(
+        'https://fungicidesutilizer.000webhostapp.com/APIs/addobservation.php?landid=' +
+            landid +
+            '&description=' +
+            observation);
+
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      if (response.body == "error") {
+        return "Error Sending Observation.";
+      } else if (response.body == 'success') {
+        return "Observation Sent Successfully.";
+      }
+    } else {
+      return "Connection Error.";
+    }
+  }
 }

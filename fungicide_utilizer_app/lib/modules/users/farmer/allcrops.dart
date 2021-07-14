@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fungicide_utilizer_app/BloC/crops_bloc/crops_bloc.dart';
 import 'package:fungicide_utilizer_app/BloC/crops_bloc/crops_events.dart';
 import 'package:fungicide_utilizer_app/BloC/crops_bloc/crops_states.dart';
+import 'package:fungicide_utilizer_app/BloC/land/landState.dart';
 import 'package:fungicide_utilizer_app/shared/components/drawer.dart';
 
 class CropsPage extends StatefulWidget {
@@ -62,6 +63,24 @@ class _CropsPagestate extends State<CropsPage> {
                 return CircularProgressIndicator();
               } else if (state is LoadingState) {
                 return CircularProgressIndicator();
+              } else if (state is ConnectionErrorState) {
+                return Stack(
+                  children: [
+                    Text(
+                        'Connection lost! Please reconnect to internet and refresh',
+                        style: TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.bold)),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {});
+                          },
+                          child: Text('Refresh',
+                              style: TextStyle(color: Colors.white)),
+                        ))
+                  ],
+                );
               } else if (state is ViewCropsSuccess) {
                 return Stack(
                   children: [
@@ -116,6 +135,9 @@ class _CropsPagestate extends State<CropsPage> {
                   children: [
                     Column(
                       children: [
+                        Text('Crop Diseases',
+                            style: TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.bold)),
                         Container(
                           child: Container(
                             height: h * .6,
@@ -127,34 +149,37 @@ class _CropsPagestate extends State<CropsPage> {
                                 itemCount: state.crop.diseases.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return Container(
-                                    child: InkWell(
-                                      child: Card(
-                                        child: ListTile(
-                                          title: Text(
-                                              '${state.crop.diseases[index].name}'),
-                                          subtitle: Text(
-                                              '${state.crop.diseases[index].id}'),
-                                          trailing: Wrap(
-                                            spacing:
-                                                12, // space between two icons
-                                            children: <Widget>[
-                                              Icon(Icons
-                                                  .arrow_forward_ios), // icon-1
-                                              //Icon(Icons.message), // icon-2
-                                            ],
+                                      child: Column(
+                                    children: [
+                                      InkWell(
+                                        child: Card(
+                                          child: ListTile(
+                                            title: Text(
+                                                '${state.crop.diseases[index].name}'),
+                                            subtitle: Text(
+                                                '${state.crop.diseases[index].id}'),
+                                            trailing: Wrap(
+                                              spacing:
+                                                  12, // space between two icons
+                                              children: <Widget>[
+                                                Icon(Icons
+                                                    .arrow_forward_ios), // icon-1
+                                                //Icon(Icons.message), // icon-2
+                                              ],
+                                            ),
                                           ),
                                         ),
+                                        onTap: () {
+                                          checkPage = true;
+                                          // bloc.add(ViewCropEvent());
+                                          // bloc.add(
+                                          //     ViewCropEvent(state.crops[index]));
+                                          bloc.add(ViewDiseaseEvent(
+                                              state.crop.diseases[index]));
+                                        },
                                       ),
-                                      onTap: () {
-                                        checkPage = true;
-                                        // bloc.add(ViewCropEvent());
-                                        // bloc.add(
-                                        //     ViewCropEvent(state.crops[index]));
-                                        bloc.add(ViewDiseaseEvent(
-                                            state.crop.diseases[index]));
-                                      },
-                                    ),
-                                  );
+                                    ],
+                                  ));
                                 }),
                           ),
                         ),
@@ -167,6 +192,9 @@ class _CropsPagestate extends State<CropsPage> {
                   children: [
                     Column(
                       children: [
+                        Text('Diseases Treatments',
+                            style: TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.bold)),
                         Container(
                           child: Container(
                             height: h * .6,

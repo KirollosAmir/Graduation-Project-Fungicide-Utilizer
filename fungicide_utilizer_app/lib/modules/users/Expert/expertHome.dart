@@ -55,6 +55,24 @@ class _ExpertHomestate extends State<ExpertHome> {
             return Center(child: CircularProgressIndicator());
           } else if (state is NewsLoadingState) {
             return Center(child: CircularProgressIndicator());
+          } else if (state is ConnectionErrorState) {
+            return Stack(
+              children: [
+                Text(
+                    'Connection lost! Please reconnect to internet and refresh',
+                    style:
+                        TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {});
+                      },
+                      child: Text('Refresh',
+                          style: TextStyle(color: Colors.white)),
+                    ))
+              ],
+            );
           } else if (state is NewsSuccessState) {
             return Stack(children: [
               new GestureDetector(
@@ -98,9 +116,10 @@ class _ExpertHomestate extends State<ExpertHome> {
                         );
                       })),
             ]);
-          } else if (state is NewsErrorState) {
-            return Text(state.message);
           }
+          // else if (state is NewsErrorState) {
+          //   return Text(state.message);
+          // }
         },
       ),
     );

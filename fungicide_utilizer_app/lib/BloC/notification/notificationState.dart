@@ -27,6 +27,11 @@ class ViewNotificationSuccessState extends NotificationState {
   ViewNotificationSuccessState({this.notification});
 }
 
+class ConnectionErrorState extends NotificationState {
+  final String message;
+  ConnectionErrorState({this.message});
+}
+
 class NotificationSeenSuccessState extends NotificationState {
   final String message;
   NotificationSeenSuccessState({this.message});

@@ -45,3 +45,10 @@ class DeleteLandSuccessState extends LandState {
   final String message;
   DeleteLandSuccessState({this.message});
 }
+
+class AddingObservationState extends LandState {}
+
+class AddObservationSuccessState extends LandState {
+  final String message;
+  AddObservationSuccessState({this.message});
+}

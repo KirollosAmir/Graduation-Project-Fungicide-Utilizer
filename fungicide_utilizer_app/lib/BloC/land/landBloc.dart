@@ -50,6 +50,15 @@ class LandBloc extends Bloc<LandEvent, LandState> {
       else {
         yield DeleteLandSuccessState(message: "Land Added Successfully.");
       }
+    } else if (event is AddObservationEvent) {
+      yield LandLoadingState();
+      var data = await repo.addObservation(event.landid, event.observation);
+      if (data == "error") {
+        yield ConnectionErrorState(
+            message: "No Network Please Recconect And Try Again !");
+      } else
+        yield AddObservationSuccessState(
+            message: "Observations added Successfully.");
     }
   }
 }

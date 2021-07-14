@@ -15,6 +15,8 @@ class _MyLandsPagestate extends State<MyLandsPage> {
   TextEditingController cropname = TextEditingController();
   TextEditingController postalcode = TextEditingController();
   TextEditingController serial = TextEditingController();
+  TextEditingController observations = TextEditingController();
+
   PageController controller = PageController();
 
   var names = ['Status', 'History'],
@@ -64,6 +66,24 @@ class _MyLandsPagestate extends State<MyLandsPage> {
                 return CircularProgressIndicator();
               } else if (state is LandLoadingState) {
                 return CircularProgressIndicator();
+              } else if (state is ConnectionErrorState) {
+                return Stack(
+                  children: [
+                    Text(
+                        'Connection lost! Please reconnect to internet and refresh',
+                        style: TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.bold)),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {});
+                          },
+                          child: Text('Refresh',
+                              style: TextStyle(color: Colors.white)),
+                        ))
+                  ],
+                );
               } else if (state is SuccessState) {
                 return Stack(
                   children: [
@@ -339,8 +359,6 @@ class _MyLandsPagestate extends State<MyLandsPage> {
                     )
                   ],
                 );
-              } else if (state is AddlandButtonEvent) {
-                return Stack();
               } else if (state is ViewLandSuccessState) {
                 return Stack(
                   children: [
@@ -349,7 +367,7 @@ class _MyLandsPagestate extends State<MyLandsPage> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
                             DefaultTabController(
-                                length: 3, // length of tabs
+                                length: 4, // length of tabs
                                 initialIndex: 0,
                                 child: Column(
                                     crossAxisAlignment:
@@ -363,11 +381,14 @@ class _MyLandsPagestate extends State<MyLandsPage> {
                                             Tab(text: 'Info'),
                                             Tab(text: 'Status'),
                                             Tab(text: 'History'),
+                                            Tab(
+                                              text: 'Add Observations',
+                                            )
                                           ],
                                         ),
                                       ),
                                       Container(
-                                          height: 600, //height of TabBarView
+                                          height: 700, //height of TabBarView
                                           decoration: BoxDecoration(
                                               border: Border(
                                                   top: BorderSide(
@@ -674,7 +695,7 @@ class _MyLandsPagestate extends State<MyLandsPage> {
                                             Container(
                                               height: h * .8,
                                               child: Column(children: [
-                                                Text('Display History',
+                                                Text('Weather Station History',
                                                     style: TextStyle(
                                                         fontSize: 22,
                                                         fontWeight:
@@ -685,7 +706,7 @@ class _MyLandsPagestate extends State<MyLandsPage> {
                                                       padding: EdgeInsets.only(
                                                           top: h * .02),
                                                       child: Container(
-                                                        height: h * .9,
+                                                        height: h * .7,
                                                         child: ListView.builder(
                                                             itemCount: state
                                                                 .land
@@ -707,36 +728,75 @@ class _MyLandsPagestate extends State<MyLandsPage> {
                                                                     child:
                                                                         Container(
                                                                       height: h *
-                                                                          0.1,
+                                                                          0.2,
                                                                       width: w *
                                                                           0.914,
                                                                       decoration:
                                                                           BoxDecoration(
                                                                         color: Colors
-                                                                            .blueGrey,
+                                                                            .white70,
                                                                         borderRadius:
-                                                                            BorderRadius.all(Radius.circular(12)),
+                                                                            BorderRadius.all(Radius.circular(15)),
                                                                       ),
                                                                       child:
                                                                           GestureDetector(
                                                                         onTap:
                                                                             () {},
-                                                                        child:
-                                                                            Center(
-                                                                          child:
-                                                                              ListTile(
-                                                                            subtitle:
+                                                                        child: Center(
+                                                                            child: ExpansionTile(
+                                                                          // key: PageStorageKey(this.widget.headerTitle),
+                                                                          title:
+                                                                              Container(
+                                                                            width:
+                                                                                double.infinity,
+                                                                            child:
                                                                                 Text(
-                                                                              "'${state.land.history[index].id}'",
-                                                                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                                                                            ),
-                                                                            title:
-                                                                                Text(
-                                                                              "'${state.land.history[index].entryDate}'",
-                                                                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                                                              "${state.land.history[index].entryDate}",
+                                                                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                                                             ),
                                                                           ),
-                                                                        ),
+                                                                          children: <
+                                                                              Widget>[
+                                                                            Container(
+                                                                              // height: MediaQuery.of(context).size.height * 0.1,
+                                                                              // width: MediaQuery.of(context).size.width,
+                                                                              color: Colors.green,
+                                                                              child: Center(child: Text("Humidity:${state.land.history[index].humidity}%")),
+                                                                            ),
+                                                                            Container(
+                                                                              // height: MediaQuery.of(context).size.height * 0.1,
+                                                                              // width: MediaQuery.of(context).size.width,
+                                                                              color: Colors.green,
+                                                                              child: Center(child: Text("Wind Speed:${state.land.history[index].windSpeed}km/h")),
+                                                                            ),
+                                                                            Container(
+                                                                              // height: MediaQuery.of(context).size.height * 0.1,
+                                                                              // width: MediaQuery.of(context).size.width,
+                                                                              color: Colors.green,
+                                                                              child: Center(child: Text("Max Temp:${state.land.history[index].maxTemp}C")),
+                                                                            ),
+                                                                            Container(
+                                                                              // height: MediaQuery.of(context).size.height * 0.1,
+                                                                              // width: MediaQuery.of(context).size.width,
+                                                                              color: Colors.green,
+                                                                              child: Center(child: Text("Min Temp:${state.land.history[index].minTemp}C")),
+                                                                            ),
+                                                                          ],
+                                                                        )
+                                                                            //     ListTile(
+                                                                            //   subtitle:
+                                                                            //       Text(
+                                                                            //     "'${state.land.history[index].id}'",
+                                                                            //     style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                                                            //   ),
+                                                                            //   title:
+                                                                            //       Text(
+                                                                            //     "'${state.land.history[index].entryDate}'",
+                                                                            //     style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                                                            //   ),
+
+                                                                            // ),
+                                                                            ),
                                                                       ),
                                                                     ),
                                                                   ));
@@ -747,6 +807,229 @@ class _MyLandsPagestate extends State<MyLandsPage> {
                                                 ),
                                               ]),
                                             ),
+                                            Container(
+                                              child: Column(
+                                                children: <Widget>[
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Text(
+                                                          'Observation:',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 18.0,
+                                                              fontWeight: FontWeight
+                                                                  .bold)), // Text('Display History',
+                                                      //     style: TextStyle(
+                                                      //         fontSize: 22,
+                                                      //         fontWeight:
+                                                      //             FontWeight.bold)),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: TextFormField(
+                                                      controller: observations,
+                                                      decoration:
+                                                          const InputDecoration(
+                                                        hintText:
+                                                            'ex: yellow spots on leafs ',
+                                                      ),
+                                                      validator: (value) {
+                                                        if (value.isEmpty) {
+                                                          return 'Please enter some text';
+                                                        }
+                                                        return null;
+                                                      },
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        vertical: 16.0),
+                                                    child: ElevatedButton(
+                                                      onPressed: () {
+                                                        // Validate returns true if the form is valid, or false
+                                                        // otherwise.
+
+                                                        // If the form is valid, display a Snackbar.
+                                                        Scaffold.of(context)
+                                                            .showSnackBar(SnackBar(
+                                                                content: Text(
+                                                                    'Processing Data')));
+                                                        bloc.add(
+                                                            AddObservationEvent(
+                                                                landid: state
+                                                                    .land.id,
+                                                                observation:
+                                                                    observations
+                                                                        .text));
+                                                        setState(() {
+                                                          bloc.add(
+                                                              ViewLandEvent(
+                                                                  state.land));
+                                                          Scaffold.of(context)
+                                                              .showSnackBar(SnackBar(
+                                                                  content: Text(
+                                                                      'Your Observation Sent Thank You.')));
+                                                        });
+                                                      },
+                                                      child: Text('Send',
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .white)),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            // Container(
+                                            //   child: Center(
+                                            //     child: Column(
+                                            //       //mainAxisAlignment: MainAxisAlignment.center,
+                                            //       children: <Widget>[
+                                            //         Form(
+                                            //           key: _formKey,
+                                            //           child: Container(
+                                            //             padding:
+                                            //                 const EdgeInsets
+                                            //                         .symmetric(
+                                            //                     horizontal:
+                                            //                         20.0,
+                                            //                     vertical: 30),
+                                            //             child: Column(
+                                            //               //mainAxisAlignment: MainAxisAlignment.center,
+                                            //               children: <Widget>[
+                                            //                 // Align(
+                                            //                 //   alignment: Alignment
+                                            //                 //       .centerLeft,
+                                            //                 //   child: Text(
+                                            //                 //       'Choos Crop:',
+                                            //                 //       style: TextStyle(
+                                            //                 //           color: Colors
+                                            //                 //               .black,
+                                            //                 //           fontSize:
+                                            //                 //               18.0)),
+                                            //                 // ),
+                                            //                 SizedBox(
+                                            //                   height: 5,
+                                            //                 ),
+                                            //                 // TextFormField(
+                                            //                 //   decoration:
+                                            //                 //       const InputDecoration(
+                                            //                 //     hintText:
+                                            //                 //         'ex: Wheat',
+                                            //                 //   ),
+                                            //                 //   validator:
+                                            //                 //       (value) {
+                                            //                 //     if (value
+                                            //                 //         .isEmpty) {
+                                            //                 //       return 'Please enter some text';
+                                            //                 //     }
+                                            //                 //     return null;
+                                            //                 //   },
+                                            //                 // ),
+                                            //                 SizedBox(
+                                            //                   height: 10,
+                                            //                 ),
+                                            //                 Align(
+                                            //                   alignment: Alignment
+                                            //                       .centerLeft,
+                                            //                   child: Text(
+                                            //                       'Observation:',
+                                            //                       style: TextStyle(
+                                            //                           color: Colors
+                                            //                               .black,
+                                            //                           fontSize:
+                                            //                               18.0)),
+                                            //                 ),
+                                            //                 SizedBox(
+                                            //                   height: 5,
+                                            //                 ),
+                                            //                 TextFormField(
+                                            //                   decoration:
+                                            //                       const InputDecoration(
+                                            //                     hintText:
+                                            //                         'ex: yellow spots on leafs ',
+                                            //                   ),
+                                            //                   validator:
+                                            //                       (value) {
+                                            //                     if (value
+                                            //                         .isEmpty) {
+                                            //                       return 'Please enter some text';
+                                            //                     }
+                                            //                     return null;
+                                            //                   },
+                                            //                 ),
+                                            //                 SizedBox(
+                                            //                   height: 10,
+                                            //                 ),
+                                            //                 Padding(
+                                            //                   padding:
+                                            //                       const EdgeInsets
+                                            //                               .symmetric(
+                                            //                           vertical:
+                                            //                               16.0),
+                                            //                   child:
+                                            //                       ElevatedButton(
+                                            //                     onPressed: () {
+                                            //                       // Validate returns true if the form is valid, or false
+                                            //                       // otherwise.
+                                            //                       if (_formKey
+                                            //                           .currentState
+                                            //                           .validate()) {
+                                            //                         // If the form is valid, display a Snackbar.
+                                            //                         Scaffold.of(
+                                            //                                 context)
+                                            //                             .showSnackBar(SnackBar(
+                                            //                                 content:
+                                            //                                     Text('Processing Data')));
+                                            //                         bloc.add(AddObservationEvent(
+                                            //                             landid: state
+                                            //                                 .land
+                                            //                                 .id,
+                                            //                             observation:
+                                            //                                 _formKey.toString()));
+                                            //                         setState(
+                                            //                             () {
+                                            //                           bloc.add(
+                                            //                               ViewLandEvent(
+                                            //                                   state.land));
+                                            //                           Scaffold.of(
+                                            //                                   context)
+                                            //                               .showSnackBar(
+                                            //                                   SnackBar(content: Text('Your Observation Sent Thank You.')));
+                                            //                         });
+                                            //                       }
+                                            //                     },
+                                            //                     child: Text(
+                                            //                         'Add',
+                                            //                         style: TextStyle(
+                                            //                             color: Colors
+                                            //                                 .white)),
+                                            //                   ),
+                                            //                 ),
+                                            //               ],
+                                            //             ),
+                                            //           ),
+                                            //         ),
+                                            //       ],
+                                            //     ),
+                                            //   ),
+                                            // ),
                                           ]))
                                     ])),
                           ]),
