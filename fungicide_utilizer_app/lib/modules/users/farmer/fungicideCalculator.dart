@@ -47,7 +47,7 @@ class _FungicideCalculatorState extends State<FungicideCalculator> {
       ),
       drawer: FarmerDrawer(context),
       body: DefaultTabController(
-        length: 4,
+        length: 3,
         child: Column(
           children: <Widget>[
             TabBar(
@@ -58,12 +58,12 @@ class _FungicideCalculatorState extends State<FungicideCalculator> {
                   text: 'Rainfall Amount',
                 ),
                 Tab(
-                  text: 'Fungicide Reduction',
+                  text: 'Reduction',
                 ),
-                Tab(text: 'Fungicide Efficacy'),
-                Tab(
-                  text: 'Disease Severity ',
-                )
+                Tab(text: 'Efficacy'),
+                // Tab(
+                //   text: 'Disease Severity ',
+                // )
               ],
             ),
             Container(
@@ -402,7 +402,7 @@ class _FungicideCalculatorState extends State<FungicideCalculator> {
                       ],
                     ),
                   ),
-                  Container(),
+                  //Container(),
                 ]))
           ],
         ),
